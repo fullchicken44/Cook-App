@@ -3,14 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/drawable/button_drawable.xml" value="0.18046875" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/drawable/menu_food_display.xml" value="0.24166666666666667" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/drawable/navigation_bar.xml" value="0.24166666666666667" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/drawable/round_component.xml" value="0.2037037037037037" />
-        <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/drawable/round_corner.xml" value="0.7857142857142857" />
+        <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/drawable/round_corner.xml" value="0.14" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/drawable/round_square_corner.xml" value="0.24166666666666667" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/drawable/search_bar.xml" value="0.24166666666666667" />
+        <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/layout/activity_login.xml" value="0.21" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/layout/menu_with_scroll.xml" value="0.38333333333333336" />
+        <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/layout/menu_with_scroll.xml" value="0.18" />
       </map>
     </option>
   </component>

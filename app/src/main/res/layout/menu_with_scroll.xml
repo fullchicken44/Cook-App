@@ -9,45 +9,41 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="180dp"
         android:background="@drawable/round_corner"
-        android:color="#1FA698"
-        />
+        android:color="#1FA698" />
 
     <ImageButton
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:background="@drawable/menu_icon"
-        android:scaleType="fitXY"
-        android:layout_marginTop="40dp"
         android:layout_marginStart="40dp"
-        />
+        android:layout_marginTop="30dp"
+        android:background="@drawable/menu_icon"
+        android:scaleType="fitXY" />
 
     <ImageButton
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:background="@drawable/menu_icon"
-        android:scaleType="fitXY"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="40dp"
-        />
+        android:background="@drawable/menu_icon"
+        android:scaleType="fitXY" />
 
     <RelativeLayout
         android:id="@+id/avatarAndName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="80dp"
         >
 
         <ImageButton
             android:id="@+id/avatar"
-            android:background="@drawable/round_component"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginStart="30dp"
-            />
+            android:background="@drawable/round_component" />
 
         <TextView
             android:id="@+id/username"
@@ -55,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="10dp"
-            android:layout_toRightOf="@+id/avatar"
+            android:layout_toEndOf="@+id/avatar"
             android:fontFamily="@font/roboto_medium"
             android:textColor="@color/white"
             android:textSize="16sp"
@@ -64,73 +60,136 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="30dp"
             android:fontFamily="@font/roboto_medium"
-
             android:textColor="#FFFFFF"
             android:textSize="22sp"
             tools:text="VND 100.000" />
     </RelativeLayout>
 
     <SearchView
-        android:id="@+id/menu_search_bar"
+        android:id="@+id/search_food"
         android:layout_width="330dp"
-        android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
+        android:layout_height="50dp"
         android:layout_below="@id/avatarAndName"
-        android:layout_marginTop="45dp"
-        android:background="@drawable/search_bar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/search_bar"/>
 
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_below="@id/search_food"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="20dp">
 
-    <ScrollView
-        android:layout_width="600dp"
-        android:layout_height="70dp"
-        android:layout_above="@id/menu_food_display"
-        android:layout_marginBottom="15dp"
-        >
-    </ScrollView>
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <HorizontalScrollView
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:layout_width="80dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/round_square_corner"
+                    android:padding="2dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/noodles" />
+
+                <ImageButton
+                    android:layout_width="80dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/round_square_corner"
+                    android:padding="2dp"
+                    android:scaleType="fitXY"
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/pizza" />
+
+                <ImageButton
+                    android:layout_width="80dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/round_square_corner"
+                    android:padding="2dp"
+                    android:scaleType="fitXY"
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/salad" />
+
+                <ImageButton
+                    android:layout_width="80dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="20dp"
+                    android:background="@drawable/round_square_corner"
+                    android:padding="2dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/fast_food" />
+
+                <ImageButton
+                    android:layout_width="80dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/round_square_corner"
+                    android:padding="2dp"
+                    android:scaleType="fitXY"
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/noodles" />
+
+                <ImageButton
+                    android:layout_width="80dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/round_square_corner"
+                    android:padding="2dp"
+                    android:scaleType="fitXY"
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/noodles" />
+
+                <ImageButton
+                    android:layout_width="80dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/round_square_corner"
+                    android:padding="2dp"
+                    android:scaleType="fitXY"
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/noodles" />
+
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
+    </LinearLayout>
+    
+
+
+
+
+    <ImageView
         android:id="@+id/menu_food_display"
-        android:layout_width="100dp"
+        android:layout_width="200dp"
         android:layout_height="250dp"
-        android:layout_below="@id/menu_search_bar"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="30dp">
+        android:layout_above="@id/navigation"
+        android:layout_marginStart="35dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/menu_food_display" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_width="220dp"
-                android:layout_height="250dp"
-                android:background="@drawable/menu_food_display" />
-
-            <ImageButton
-                android:layout_width="50dp"
-                android:layout_height="45dp"
-                android:layout_alignEnd="@id/menu_food_display"
-                android:layout_alignBottom="@id/menu_food_display"
-                android:layout_marginBottom="3dp"
-                android:layout_marginEnd="3dp"
-                android:background="@drawable/round_square_corner"
-                android:backgroundTint="@color/white" />
-        </LinearLayout>
-
-
-
-    </HorizontalScrollView>
-
-
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:layout_alignEnd="@id/menu_food_display"
+        android:layout_alignBottom="@id/menu_food_display"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="3dp"
+        android:background="@drawable/round_square_corner"
+        android:backgroundTint="@color/white" />
 
     <LinearLayout
         android:id="@+id/navigation"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/navigation_bar"
         android:orientation="horizontal" />
