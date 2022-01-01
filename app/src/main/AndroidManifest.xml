@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalAsm">
         <activity
-            android:name=".Signup"
+            android:name=".SignupActivity"
             android:exported="false" />
         <activity
-            android:name=".Login_Activity"
+            android:name=".LoginActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
