@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/welcome_back"
-            android:textColor="@color/colorBackground"
+            android:textColor="@color/colorMain"
             android:textSize="35sp"
             android:textStyle="bold" />
 
@@ -89,7 +89,7 @@
             android:background="@drawable/button_drawable"
             android:text="@string/login"
             android:textAllCaps="false"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/white"
             android:textSize="16sp" />
 
         <TextView
