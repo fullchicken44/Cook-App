@@ -24,4 +24,5 @@
     <string name="stay_strong">Stay strong together</string>
     <string name="volunteer">Become a volunteer</string>
     <string name="forget_password">Forget Password.?</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>

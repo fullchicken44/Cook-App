@@ -76,7 +76,7 @@
         android:layout_below="@id/avatarAndName"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:background="@drawable/search_bar"/>
+        android:background="@drawable/search_bar" />
 
     <HorizontalScrollView
         android:layout_width="match_parent"
@@ -276,12 +276,55 @@
         </LinearLayout>
     </HorizontalScrollView>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/navigation_bar"
-        android:orientation="horizontal" />
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+            <ImageButton
+                android:id="@+id/nav_menu"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/menu_icon"
+                android:scaleType="fitXY" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" >
+            </Space>
+
+            <ImageButton
+                android:id="@+id/nav_search"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/menu_icon"
+                android:scaleType="fitXY" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" >
+            </Space>
+
+            <ImageButton
+                android:id="@+id/nav_user"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/menu_icon"
+                android:scaleType="fitXY" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
 
 </RelativeLayout>
