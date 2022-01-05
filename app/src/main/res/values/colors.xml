@@ -12,6 +12,10 @@
     <color name="colorAccent">#B9BBBD</color>
     <color name="colorBackground">#333C46</color>
     <color name="colorMain">#2AC1BC</color>
+    <color name="colorSecondaryRed">#cd202c</color>
+    <color name="colorSecondaryPurple">#6639b7</color>
+    <color name="colorSecondaryOrange">#f06400</color>
+    <color name="colorSecondaryGreen">#91d400</color>
     <color name="colorSplashText">#F0F0F0</color>
     <color name="colorProgressBar">#FFCE511C</color>
     <color name="colorTextView">#83898E</color>

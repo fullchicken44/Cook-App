@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "878186206935",
+    "project_id": "finalandroid-e100e",
+    "storage_bucket": "finalandroid-e100e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:878186206935:android:472280d0c11b5985ae0292",
+        "android_client_info": {
+          "package_name": "com.example.finalasm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "878186206935-d9fep26eur3oitchpg9jqv61jfbetbtn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyD3GVbDzUz4JGU5GMvl7X2A8BMG80kyk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "878186206935-d9fep26eur3oitchpg9jqv61jfbetbtn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

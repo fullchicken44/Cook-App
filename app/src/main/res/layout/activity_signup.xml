@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/sign_up"
-            android:textColor="@color/colorMain"
+            android:textColor="@color/colorSecondaryOrange"
             android:textSize="35sp"
             android:textStyle="bold" />
 
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/WelcomeTextView"
             android:layout_marginTop="10dp"
-            android:text="@string/volunteer"
+            android:text="First step to become a master chef"
             android:textColor="@color/colorAccent"
             android:textSize="15sp" />
 
@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
-                android:hint="@string/username"
+                android:hint="@string/email"
                 android:inputType="textEmailAddress"
                 android:singleLine="true"
                 android:textColor="@color/colorTextView"
@@ -72,7 +72,7 @@
             android:layout_above="@+id/asGuest"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/button_drawable"
+            android:background="@drawable/button_drawable_orange"
             android:text="@string/sign_up"
             android:textAllCaps="false"
             android:textColor="@color/white"

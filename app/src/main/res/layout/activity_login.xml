@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/WelcomeTextView"
             android:layout_marginTop="10dp"
-            android:text="@string/stay_strong"
+            android:text="Let's cook together"
             android:textColor="@color/colorAccent"
             android:textSize="15sp" />
 
@@ -66,16 +66,29 @@
                 android:textColorHint="@color/colorAccent"
                 android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/sign_up"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_marginStart="10dp"
-                android:layout_gravity="start"
-                android:text="@string/sign_up"
-                android:textStyle="bold"
-                android:clickable="true"/>
+                android:layout_gravity="start">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="New to the app? "/>
+
+                <TextView
+                    android:id="@+id/sign_up"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sign_up"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:textColor="@color/colorMain"/>
+
+            </LinearLayout>
+
+
 
         </LinearLayout>
 
@@ -86,7 +99,7 @@
             android:layout_above="@+id/asGuest"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/button_drawable"
+            android:background="@drawable/button_drawable_mint"
             android:text="@string/login"
             android:textAllCaps="false"
             android:textColor="@color/white"

@@ -13,29 +13,13 @@
         android:background="@drawable/round_corner"
         android:color="#1FA698" />
 
-    <ImageButton
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/menu_icon"
-        android:scaleType="fitXY" />
-
-    <ImageButton
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="40dp"
-        android:background="@drawable/menu_icon"
-        android:scaleType="fitXY" />
 
     <RelativeLayout
         android:id="@+id/avatarAndName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="40dp"
         >
 
         <ImageButton
@@ -75,20 +59,20 @@
         android:layout_height="50dp"
         android:layout_below="@id/avatarAndName"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/search_bar" />
 
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/search_food"
-        android:layout_marginStart="35dp"
         android:layout_marginTop="20dp"
         android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
             android:orientation="horizontal">
 
             <ImageButton
@@ -289,38 +273,46 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true">
 
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
             <ImageButton
                 android:id="@+id/nav_menu"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:background="@drawable/menu_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/nav_menu"
                 android:scaleType="fitXY" />
 
             <Space
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_weight="1" >
-            </Space>
+                android:layout_weight="1" />
 
             <ImageButton
                 android:id="@+id/nav_search"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:background="@drawable/menu_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/nav_search"
                 android:scaleType="fitXY" />
 
             <Space
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_weight="1" >
-            </Space>
+                android:layout_weight="1" />
 
             <ImageButton
                 android:id="@+id/nav_user"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:background="@drawable/menu_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/nav_user"
                 android:scaleType="fitXY" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
 
         </LinearLayout>
     </RelativeLayout>
