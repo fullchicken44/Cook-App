@@ -1,5 +1,6 @@
 package com.example.finalasm;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import java.util.List;
 
 public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder>{
     private List<Meal> mealList;
+
 
     public void setData(List<Meal> mealList) {
         this.mealList = mealList;
@@ -44,6 +46,10 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
         }
 //        holder.imageDish.setImageResource(R.drawable.slack_pic);
         holder.nameDish.setText(meal.getStrMeal());
+        // Need all three function to make the test movable;
+        holder.nameDish.setSelected(true);
+        holder.nameDish.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        holder.nameDish.setSingleLine(true);
     }
 
     @Override
@@ -61,6 +67,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
 
         public DishViewHolder(@NonNull View itemView) {
             super(itemView);
+
             imageDish = itemView.findViewById(R.id.menu_food_display);
             nameDish = itemView.findViewById(R.id.name_dish_card);
         }

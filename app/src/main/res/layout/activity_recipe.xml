@@ -96,12 +96,12 @@
             android:layout_weight="1"
             android:ellipsize="marquee"
             android:focusable="true"
-            android:fontFamily="@font/baemin"
             android:marqueeRepeatLimit="marquee_forever"
-            android:scrollHorizontally="true"
             android:singleLine="true"
+            android:fontFamily="@font/baemin"
+            android:scrollHorizontally="true"
             android:text="Burger Cheese"
-            android:textColor="@color/mint"
+            android:textColor="@color/colorMain"
             android:textSize="30dp" />
 
         <LinearLayout

@@ -13,13 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_alignParentTop="true"
-        android:background="@drawable/round_corner_user"
+        android:background="@drawable/round_corner"
         android:orientation="horizontal" />
 
     <RelativeLayout
         android:id="@+id/navigation"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="35dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/navigation_bar"
         android:orientation="horizontal">
@@ -36,8 +36,8 @@
 
             <ImageButton
                 android:id="@+id/nav_menu"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:background="@drawable/nav_menu"
                 android:scaleType="fitXY" />
 
@@ -48,8 +48,8 @@
 
             <ImageButton
                 android:id="@+id/nav_search"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:background="@drawable/nav_search"
                 android:scaleType="fitXY" />
 
@@ -60,8 +60,8 @@
 
             <ImageButton
                 android:id="@+id/nav_user"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:background="@drawable/nav_user"
                 android:scaleType="fitXY" />
 
@@ -83,37 +83,37 @@
 
         <TextView
             android:id="@+id/hello_user"
-            android:layout_width="50dp"
+            android:layout_width="120dp"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
             android:layout_marginTop="18dp"
-            android:layout_weight="2"
             android:fontFamily="@font/baemin"
             android:text="Hello,"
-            android:textSize="40dp" />
+            android:textSize="40sp" />
 
         <TextView
             android:id="@+id/name_user"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:fontFamily="@font/baemin"
             android:textColor="@color/black"
             tools:text="Billie"
-            android:textSize="50dp" />
+            android:textSize="50sp" />
     </LinearLayout>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/image_user"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         android:layout_below="@+id/title_user"
         android:layout_marginStart="20dp"
         android:layout_marginTop="0dp"
         android:src="@drawable/slack_pic" />
 
     <ImageButton
+        android:id="@+id/post_user"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"

@@ -7,6 +7,7 @@
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/drawable-v24/button_drawable_orange.xml" value="0.18046875" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/drawable/button_drawable.xml" value="0.18046875" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/drawable/button_post_meal.xml" value="0.299609375" />
+        <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/drawable/button_shape_round.xml" value="0.1" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.299609375" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/drawable/ic_baseline_minimize_24.xml" value="0.177734375" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/drawable/menu_food_display.xml" value="0.24166666666666667" />
@@ -16,12 +17,13 @@
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/drawable/round_corner_uer.xml" value="0.177734375" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/drawable/round_square_corner.xml" value="0.24166666666666667" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/drawable/round_square_transparent.xml" value="0.177734375" />
+        <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/drawable/round_top_corner.xml" value="0.177734375" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/drawable/search_bar.xml" value="0.24166666666666667" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/font/baemin_font.xml" value="0.31015625" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/font/roboto_medium.xml" value="0.31015625" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/font/roboto_thin.xml" value="0.31015625" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/layout/activity_login.xml" value="0.21" />
-        <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/layout/activity_main.xml" value="0.14" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/layout/activity_post_meal_page.xml" value="0.165625" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/layout/activity_recipe.xml" value="0.165625" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/layout/activity_signup.xml" value="0.22" />
