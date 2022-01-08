@@ -16,6 +16,8 @@
     <string name="read_it_together">Read it together</string>
     <string name="skip">Skip</string>
     <string name="login">Login</string>
+    <string name="firstName">First Name</string>
+    <string name="lastName">Last Name</string>
     <string name="email">Email</string>
     <string name="username">Username</string>
     <string name="password">Password</string>

@@ -40,6 +40,37 @@
             android:layout_below="@+id/readItTogetherTextView"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+
+                <EditText
+                    android:id="@+id/userFirstName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/firstName"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/colorTextView"
+                    android:textColorHint="@color/colorAccent"
+                    android:textSize="15sp"
+                    android:layout_weight="1"/>
+
+                <EditText
+                    android:id="@+id/userLastName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/lastName"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/colorTextView"
+                    android:textColorHint="@color/colorAccent"
+                    android:textSize="15sp"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+
             <EditText
                 android:id="@+id/userEmail"
                 android:layout_width="match_parent"

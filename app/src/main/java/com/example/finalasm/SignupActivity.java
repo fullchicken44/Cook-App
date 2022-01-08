@@ -13,15 +13,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "EmailPassword";
     private FirebaseAuth firebaseAuth;
-    private EditText userEmail, userPassword;
+    private EditText userFirstName, userLastName, userEmail, userPassword;
+    DatabaseReference mealDb = FirebaseDatabase.getInstance
+            ("https://finalandroid-e100e-default-rtdb.asia-southeast1.firebasedatabase.app")
+            .getReference("meal");
+    DatabaseReference userDb = FirebaseDatabase.getInstance
+            ("https://finalandroid-e100e-default-rtdb.asia-southeast1.firebasedatabase.app")
+            .getReference("user").child("users");
+    FirebaseDB provider = new FirebaseDB();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +42,8 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        userFirstName = findViewById(R.id.userFirstName);
+        userLastName = findViewById(R.id.userLastName);
         userEmail = findViewById(R.id.userEmail);
         userPassword = findViewById(R.id.userPassword);
         Button signUp = findViewById(R.id.sign_upBtn);
@@ -36,11 +51,11 @@ public class SignupActivity extends AppCompatActivity {
         signUp.setOnClickListener(v -> {
             String inputEmail = userEmail.getText().toString();
             String inputPassword = userPassword.getText().toString();
-            createAccount(inputEmail, inputPassword, isReg -> {
+            String inputName = userFirstName.getText().toString() + " " + userLastName.getText().toString();
+            createAccount(inputName, inputEmail, inputPassword, isReg -> {
                 if (isReg) {
                     Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
                     intent.putExtra("email", inputEmail);
-                    Log.d(TAG, "input email on sent: " + inputEmail);
                     setResult(RESULT_OK, intent);
                     finish();
                 } else {
@@ -60,35 +75,18 @@ public class SignupActivity extends AppCompatActivity {
         }
     }
 
-    private void createAccount(String email, String password, authCallback callback) {
+    private void createAccount(String name, String email, String password, authCallback callback) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     boolean isReg;
                     if (task.isSuccessful()) {
-                        FirebaseAuth auth = FirebaseAuth.getInstance();
-                        auth.sendSignInLinkToEmail(email, actionCodeSettings)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            Log.d(TAG, "Email sent.");
-                                        }
-                                    }
-                                });
-
+                        User user = new User(email, name, new ArrayList<>(), new ArrayList<>(), false);
                         // If sign up success
-                        Log.d(TAG, "Registration successfully.");
+                        String key = userDb.push().getKey();
+                        assert key != null;
+                        userDb.child(key).setValue(user).addOnSuccessListener(unused -> Log.d("REGISTER: ","SUCCESS"));
+                        Log.d("Registration successfully.", user.toString());
                         isReg = true;
-                        AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
-                        final TextView alert = new EditText(this);
-                        alert.setText("Please check your email for verification!");
-                        alert.setTextSize(20);
-                        builder.setView(alert);
-                        builder.setTitle("Success");
-                        builder.setMessage("")
-                                .setNeutralButton("Dismiss", null)
-                                .setIcon(android.R.drawable.ic_dialog_alert);
-                        builder.show();
                     } else {
                         // If sign up failed
                         Log.w(TAG, "Registration failed.", task.getException());

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -11,23 +12,89 @@ import android.widget.TextView;
 import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private final String dbAPI = "https://finalandroid-e100e-default-rtdb.asia-southeast1.firebasedatabase.app";
+    DatabaseReference mealDb = FirebaseDatabase.getInstance
+            ("https://finalandroid-e100e-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("meal");
+    DatabaseReference userDb = FirebaseDatabase.getInstance
+            ("https://finalandroid-e100e-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("user").child("users");
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
     ImageButton userAvatar;
     TextView username;
     SearchView searchFood;
     ImageButton nav_menu,nav_search,nav_user;
+    Meal meal;
+    User user;
+    List<Meal> mainMealList = new ArrayList();
+    List<User> mainUserList = new ArrayList<>();
+    FirebaseDB provider = new FirebaseDB();
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+
+        provider.fetchAllMeal(mealDb,mealList -> {
+            for (int i =0; i < mealList.size();i++) {
+                meal = (Meal) mealList.get(i);
+                mainMealList.add(meal);
+            }
+        });
+
+        provider.fetchAllUser(userDb,userList -> {
+            for (int i = 0; i < userList.size(); i++) {
+                user = (User) userList.get(i);
+                mainUserList.add(user);
+            }
+            if (firebaseUser == null) {
+                username.setText("Guest");
+            } else {
+                for (User user : mainUserList) {
+                    if (firebaseUser.getEmail().equals(user.getUserEmail())) {
+                        username.setText(user.getUserName());
+                    }
+                }
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
+
+        provider.fetchAllMeal(mealDb,mealList -> {
+            for (int i =0; i < mealList.size();i++) {
+                meal = (Meal) mealList.get(i);
+                mainMealList.add(meal);
+            }
+        });
+
+        provider.fetchAllUser(userDb,userList -> {
+            for (int i = 0; i < userList.size(); i++) {
+                user = (User) userList.get(i);
+                mainUserList.add(user);
+            }
+            if (firebaseUser == null) {
+                username.setText("Guest");
+            } else {
+                for (User user : mainUserList) {
+                    if (firebaseUser.getEmail().equals(user.getUserEmail())) {
+                        username.setText(user.getUserName());
+                    }
+                }
+            }
+        });
 
         userAvatar = findViewById(R.id.avatar);
         username = findViewById(R.id.username);
@@ -36,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
         nav_search = findViewById(R.id.nav_search);
         nav_user = findViewById(R.id.nav_user);
 
+        firebaseAuth.signOut();
         userAvatar.setOnClickListener(v -> {
             if (firebaseUser == null) {
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
@@ -43,8 +111,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        nav_user.setOnClickListener(v -> {
+            Intent intent;
+            if (firebaseUser == null) {
+                intent = new Intent(MainActivity.this, LoginActivity.class);
+            } else {
+                intent = new Intent(MainActivity.this, UserProfile.class);
+            }
+            startActivity(intent);
+        });
     }
 
-
+    public interface firebaseCallback {
+        void call(List list);
+    }
 }
