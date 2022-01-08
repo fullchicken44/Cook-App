@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_alignParentTop="true"
-        android:background="@drawable/round_corner"
+        android:background="@drawable/round_one_corner"
         android:orientation="horizontal" />
 
     <RelativeLayout
@@ -99,8 +99,8 @@
             android:layout_weight="2"
             android:fontFamily="@font/baemin"
             android:textColor="@color/black"
-            tools:text="Billie"
-            android:textSize="50sp" />
+            android:textSize="50sp"
+            tools:text="Billie" />
     </LinearLayout>
 
     <de.hdodenhof.circleimageview.CircleImageView

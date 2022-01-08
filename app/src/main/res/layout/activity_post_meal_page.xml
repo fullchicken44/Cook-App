@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_alignParentTop="true"
-        android:background="@drawable/round_corner"
+        android:background="@drawable/round_one_corner"
         android:orientation="horizontal" />
 
     <LinearLayout
@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
-            android:background="@color/colorMain" />
+            android:background="@drawable/ic_baseline_arrow_back_ios_new_24_white" />
     </LinearLayout>
 
     <LinearLayout
