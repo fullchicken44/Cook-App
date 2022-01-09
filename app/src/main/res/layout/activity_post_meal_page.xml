@@ -71,6 +71,20 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_finish_post_meal"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:drawablePadding="12dp"
+                android:text="Finish"
+                android:fontFamily="@font/baemin"
+                android:textSize="20dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:background="@drawable/button_shape_round"/>
 
             <EditText
                 android:id="@+id/input_name_post_meal"
@@ -133,17 +147,32 @@
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp" />
 
-            <Button
-                android:id="@+id/input_image_post_meal"
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:orientation="horizontal"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="16dp"
                 android:drawablePadding="12dp"
-                android:hint="Meal Image URL"
                 android:paddingStart="10dp"
-                android:paddingEnd="10dp" />
+                android:paddingEnd="10dp" >
+                <ImageButton
+                    android:id="@+id/button_image_post_meal"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/ic_baseline_add_photo_alternate_24"
+                    android:backgroundTint="@color/colorMain"/>
+                <EditText
+                    android:id="@+id/input_src_image_post_meal"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+
+                    android:hint="Meal Src Reference"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <EditText
                 android:id="@+id/input_youtube_post_meal"
@@ -189,7 +218,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="16dp"
                 android:drawablePadding="12dp"
-                android:hint="Meal Measure Respectively with Ingredient"
+                android:hint="Meal Measure per Ingredient"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp" />
 
