@@ -1,5 +1,8 @@
 package com.example.finalasm;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +19,12 @@ import java.util.List;
 
 public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder>{
     private List<Meal> mealList;
+    Context context;
 
 
-    public void setData(List<Meal> mealList) {
+    public void setData(Context context, List<Meal> mealList) {
         this.mealList = mealList;
+        this.context = context;
         notifyDataSetChanged();
     }
 
@@ -31,7 +36,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DishViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull DishViewHolder holder, @SuppressLint("RecyclerView") int position) {
         String imageURL = "https:\\/\\/www.themealdb.com\\/images\\/media\\/meals\\/ysqupp1511640538.jpg";
         Meal meal = mealList.get(position);
         if (meal == null){
@@ -44,12 +49,19 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
                     .fit()
                     .into(holder.imageDish);
         }
-//        holder.imageDish.setImageResource(R.drawable.slack_pic);
         holder.nameDish.setText(meal.getStrMeal());
         // Need all three function to make the test movable;
-        holder.nameDish.setSelected(true);
-        holder.nameDish.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-        holder.nameDish.setSingleLine(true);
+//        holder.nameDish.setSelected(true);
+//        holder.nameDish.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+//        holder.nameDish.setSingleLine(true);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, RecipeActivity.class);
+                intent.putExtra("name",mealList.get(position).getStrMeal());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
