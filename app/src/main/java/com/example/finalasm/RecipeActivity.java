@@ -200,9 +200,10 @@ public class RecipeActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     Log.i(TAG, "Click on back button: ");
                     Toast.makeText(getApplicationContext(),"Home Button",Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(RecipeActivity.this, PostMealPage.class);
-                    //Intent intent = new Intent(MainActivity.this, ActivityUserPage.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent(RecipeActivity.this, PostMealPage.class);
+//                    //Intent intent = new Intent(MainActivity.this, ActivityUserPage.class);
+//                    startActivity(intent);
+                    finish();
                 }
 
             });
@@ -240,6 +241,9 @@ public class RecipeActivity extends AppCompatActivity {
             /*
             Rating view
             */
+
+
+
             rate.setOnClickListener(new View.OnClickListener() {
                 @RequiresApi(api = Build.VERSION_CODES.Q)
                 @Override
@@ -268,8 +272,6 @@ public class RecipeActivity extends AppCompatActivity {
                             })
                             .setNegativeButton(android.R.string.cancel, null).show();
                 }
-
-
 
             });
 
@@ -318,12 +320,12 @@ public class RecipeActivity extends AppCompatActivity {
 
     }
 
-    // Get rating bar
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //ratingBar.getRating();
-    }
+//    // Get rating bar
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        //ratingBar.getRating();
+//    }
 
     public interface firebaseCallback {
         void call(List list);
