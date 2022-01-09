@@ -55,7 +55,7 @@ public class PostMealPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_meal_page);
 
-        imageAdd = findViewById(R.id.input_image_post_meal);
+        imageAdd = findViewById(R.id.button_image_post_meal);
 
 
         imageAdd.setOnClickListener(new View.OnClickListener() {
@@ -142,8 +142,8 @@ public class PostMealPage extends AppCompatActivity {
         TextView strDrinkAlternate = findViewById(R.id.input_drink_post_meal);
         meal.setStrDrinkAlternate(strDrinkAlternate.getText().toString());
 
-        TextView mealImageURL = findViewById(R.id.input_image_post_meal);
-        meal.setStrImageSource(mealImageURL.getText().toString());
+        //TextView mealImageURL = findViewById(R.id.input_image_post_meal);
+        // meal.setStrImageSource(mealImageURL.getText().toString());
 
         TextView mealYoutubeURL = findViewById(R.id.input_youtube_post_meal);
         meal.setStrYoutube(mealYoutubeURL.getText().toString());
