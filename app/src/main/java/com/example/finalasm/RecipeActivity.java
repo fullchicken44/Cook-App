@@ -66,17 +66,30 @@ public class RecipeActivity extends AppCompatActivity {
     Meal meal;
     FirebaseDB firebaseHandler = new FirebaseDB();
 
+    String nameValue = "Apple Frangipan Tart";
+    String currentID;
+
     @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        Intent intent = getIntent();
+//        String nameValue = (String) intent.getExtras().get("name");
+
+
         // Meals
         firebaseHandler.fetchAllMeal(mealDb, mealList -> {
             for (int i = 0; i < mealList.size();i++) {
                 meal = (Meal) mealList.get(i);
                 mainMealList.add(meal);
+            }
+
+            for(int i=0; i < mainMealList.size(); i++) {
+                if (nameValue.equals(mainMealList.get(i).getStrMeal())) {
+                    currentID = mainMealList.get(i).getIdMeal();
+                }
             }
 
             Log.d("TAG", "Meal trong day la: " + mainMealList.get(5).toString());
@@ -88,7 +101,7 @@ public class RecipeActivity extends AppCompatActivity {
 
             // Current meal position
             // Get one meal object
-            Meal mealObj = mainMealList.get(7);
+            Meal mealObj = mainMealList.get(Integer.parseInt(currentID));
 
             // Meal obj name
             TextView mealObjName = (TextView) findViewById(R.id.name_recipe);

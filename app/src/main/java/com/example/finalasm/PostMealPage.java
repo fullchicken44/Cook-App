@@ -67,7 +67,6 @@ public class PostMealPage extends AppCompatActivity {
     }
 
     private void openImage() {
-
         Intent intent = new Intent();
         intent.setType("image/");
         intent.setAction(Intent.ACTION_GET_CONTENT);
