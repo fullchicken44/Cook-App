@@ -27,7 +27,10 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginStart="30dp"
-            android:background="@drawable/round_component"/>
+            android:background="@drawable/round_component"
+            android:src="@drawable/ic_baseline_person_24"
+            android:scaleType="centerCrop"
+            />
 
         <TextView
             android:id="@+id/username"

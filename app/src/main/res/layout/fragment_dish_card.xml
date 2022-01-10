@@ -14,17 +14,15 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
         app:cardCornerRadius="10dp"
-        android:layout_marginStart="3dp"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="30dp"
         app:cardElevation="0dp">
 
         <ImageView
             android:id="@+id/menu_food_display"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
             android:scaleType="centerCrop"
             android:src="@drawable/slack_pic" />
     </androidx.cardview.widget.CardView>
@@ -45,15 +43,5 @@
         android:text="Pizza 4P's"
         android:textColor="@color/black"
         android:textSize="14sp" />
-
-    <ImageButton
-        android:id="@+id/button_dish_card"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="120dp"
-        android:layout_marginStart="90dp"
-        android:background="@drawable/round_square_corner"
-        android:backgroundTint="@color/white"
-        android:src="@drawable/ic_baseline_minimize_24" />
 
 </androidx.cardview.widget.CardView>

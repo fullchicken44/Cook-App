@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference userDb = FirebaseDatabase.getInstance
             ("https://finalandroid-e100e-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("user").child("users");
     FirebaseAuth firebaseAuth;
-    FirebaseUser firebaseUser;
+    FirebaseUser firebaseUser = null;
     ImageView userAvatar;
     TextView username;
     SearchView searchFood;
@@ -45,22 +45,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        categoryAdapter = new CategoryAdapter(this);
         rcvCategory = findViewById(R.id.recycler_main);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-        rcvCategory.setLayoutManager(linearLayoutManager);
-        rcvCategory.setAdapter(categoryAdapter);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-
-        provider.fetchAllMeal(mealDb, mealList -> {
-            for (int i = 0; i < mealList.size(); i++) {
-                meal = (Meal) mealList.get(i);
-                mainMealList.add(meal);
-                }
-            categoryAdapter.setData(getListCategory());
-        });
 
         provider.fetchAllUser(userDb,userList -> {
             for (int i = 0; i < userList.size(); i++) {
@@ -68,14 +56,27 @@ public class MainActivity extends AppCompatActivity {
                 mainUserList.add(user);
             }
             if (firebaseUser == null) {
+                categoryAdapter = new CategoryAdapter(MealAdapter.VERTICAL, this);
                 username.setText("Guest");
             } else {
                 for (User user : mainUserList) {
                     if (firebaseUser.getEmail().equals(user.getUserEmail())) {
+                        categoryAdapter = new CategoryAdapter(MealAdapter.VERTICAL_ADD, this);
                         username.setText(user.getUserName());
                     }
                 }
             }
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+            rcvCategory.setLayoutManager(linearLayoutManager);
+            rcvCategory.setAdapter(categoryAdapter);
+
+            provider.fetchAllMeal(mealDb, mealList -> {
+                for (int i = 0; i < mealList.size(); i++) {
+                    meal = (Meal) mealList.get(i);
+                    mainMealList.add(meal);
+                }
+                categoryAdapter.setData(getListCategory());
+            });
         });
     }
 
@@ -85,23 +86,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-
-        categoryAdapter = new CategoryAdapter(this);
         rcvCategory = findViewById(R.id.recycler_main);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-        rcvCategory.setLayoutManager(linearLayoutManager);
-        rcvCategory.setAdapter(categoryAdapter);
 
 
-        provider.fetchAllMeal(mealDb, mealList -> {
-            for (int i = 0; i < mealList.size(); i++) {
-                meal = (Meal) mealList.get(i);
-                mainMealList.add(meal);
-            }
-            List<Category> listCategory = new ArrayList<>();
-            listCategory.add(new Category("All Meal", mainMealList));
-            categoryAdapter.setData(listCategory);
-        });
 
         provider.fetchAllUser(userDb,userList -> {
             for (int i = 0; i < userList.size(); i++) {
@@ -109,15 +96,30 @@ public class MainActivity extends AppCompatActivity {
                 mainUserList.add(user);
             }
             if (firebaseUser == null) {
+                categoryAdapter = new CategoryAdapter(MealAdapter.VERTICAL, this);
                 username.setText("Guest");
             } else {
                 for (User user : mainUserList) {
                     if (firebaseUser.getEmail().equals(user.getUserEmail())) {
+                        categoryAdapter = new CategoryAdapter(MealAdapter.VERTICAL_ADD, this);
                         username.setText(user.getUserName());
                     }
                 }
             }
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+            rcvCategory.setLayoutManager(linearLayoutManager);
+            rcvCategory.setAdapter(categoryAdapter);
+
+            provider.fetchAllMeal(mealDb, mealList -> {
+                for (int i = 0; i < mealList.size(); i++) {
+                    meal = (Meal) mealList.get(i);
+                    mainMealList.add(meal);
+                }
+                categoryAdapter.setData(getListCategory());
+            });
         });
+
+
 
         userAvatar = findViewById(R.id.avatar);
         username = findViewById(R.id.username);
@@ -134,12 +136,6 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-        nav_search.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-            startActivity(intent);
-            finish();
-        });
-
         nav_user.setOnClickListener(v -> {
             Intent intent;
             if (firebaseUser == null) {
@@ -147,6 +143,13 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 intent = new Intent(MainActivity.this, UserProfile.class);
             }
+            startActivity(intent);
+        });
+
+        nav_search.setOnClickListener(v -> {
+            Intent intent;
+            intent = new Intent(MainActivity.this, SearchActivity.class);
+
             startActivity(intent);
         });
     }

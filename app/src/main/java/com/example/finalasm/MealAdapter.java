@@ -20,6 +20,16 @@ import java.util.List;
 public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder>{
     private List<Meal> mealList;
     Context context;
+    public static final int HORIZONTAL = 0;
+    public static final int VERTICAL_ADD = 1;
+    public static final int VERTICAL_REMOVE = 2;
+    public static final int VERTICAL = 3;
+    int type;
+
+    public MealAdapter(Context context, int type) {
+        this.context = context;
+        this.type = type;
+    }
 
 
     public void setData(Context context, List<Meal> mealList) {
@@ -31,7 +41,18 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
     @NonNull
     @Override
     public DishViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_dish_card,parent,false);
+        View view = null;
+        if (type == VERTICAL) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_dish_card, parent, false);
+        }else if (type == HORIZONTAL) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_dish_card_horizontal, parent, false);
+        }
+        else if (type == VERTICAL_ADD) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_dish_card_add, parent, false);
+        }
+        else if (type == VERTICAL_REMOVE) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_dish_card_remove, parent, false);
+        }
         return new DishViewHolder(view);
     }
 
@@ -50,10 +71,6 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
                     .into(holder.imageDish);
         }
         holder.nameDish.setText(meal.getStrMeal());
-        // Need all three function to make the test movable;
-//        holder.nameDish.setSelected(true);
-//        holder.nameDish.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-//        holder.nameDish.setSingleLine(true);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
