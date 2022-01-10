@@ -73,7 +73,7 @@ public class UserProfile extends AppCompatActivity {
         image_user = findViewById(R.id.image_user);
         post = findViewById(R.id.post_user);
         rcvCategory = findViewById(R.id.recycler_user);
-        categoryAdapter = new CategoryAdapter(this);
+        categoryAdapter = new CategoryAdapter(MealAdapter.VERTICAL_REMOVE, this);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rcvCategory.setLayoutManager(linearLayoutManager);

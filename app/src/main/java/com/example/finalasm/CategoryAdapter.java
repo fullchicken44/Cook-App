@@ -16,9 +16,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     private Context context;
     private List<Category> listCategory;
+    int type;
 
-    public CategoryAdapter(Context context) {
+    public CategoryAdapter(int type, Context context) {
         this.context = context;
+        this.type = type;
     }
 
     public void setData(List<Category> list) {
@@ -44,7 +46,18 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         holder.mealList.setLayoutManager(linearLayoutManager);
 
         holder.nameCategory.setText(category.getNameCategory());
-        MealAdapter mealAdapter = new MealAdapter();
+        MealAdapter mealAdapter = null;
+        if (type == MealAdapter.VERTICAL) {
+            mealAdapter = new MealAdapter(context,MealAdapter.VERTICAL);
+        }else if (type == MealAdapter.HORIZONTAL) {
+            mealAdapter = new MealAdapter(context,MealAdapter.HORIZONTAL);
+        }
+        else if (type == MealAdapter.VERTICAL_ADD) {
+            mealAdapter = new MealAdapter(context,MealAdapter.VERTICAL_ADD);
+        }
+        else if (type == MealAdapter.VERTICAL_REMOVE) {
+            mealAdapter = new MealAdapter(context,MealAdapter.VERTICAL_REMOVE);
+        }
         mealAdapter.setData(context,category.getMealList());
 
         holder.mealList.setAdapter(mealAdapter);
