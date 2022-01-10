@@ -45,7 +45,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
         holder.nameCategory.setText(category.getNameCategory());
         MealAdapter mealAdapter = new MealAdapter();
-        mealAdapter.setData(category.getMealList());
+        mealAdapter.setData(context,category.getMealList());
 
         holder.mealList.setAdapter(mealAdapter);
     }

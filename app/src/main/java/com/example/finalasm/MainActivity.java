@@ -134,6 +134,12 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
+        nav_search.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
         nav_user.setOnClickListener(v -> {
             Intent intent;
             if (firebaseUser == null) {

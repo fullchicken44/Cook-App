@@ -66,20 +66,11 @@ public class RecipeActivity extends AppCompatActivity {
     Meal meal;
     FirebaseDB firebaseHandler = new FirebaseDB();
 
-    String nameValue = "Apple Frangipan Tart";
-    String currentID;
-    Double currentRating;
-
-
     @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        Intent intent = getIntent();
-//        String nameValue = (String) intent.getExtras().get("name");
-
 
         // Meals
         firebaseHandler.fetchAllMeal(mealDb, mealList -> {
@@ -88,14 +79,7 @@ public class RecipeActivity extends AppCompatActivity {
                 mainMealList.add(meal);
             }
 
-            Meal mealObj = new Meal();
-            for(int i=0; i < mainMealList.size(); i++) {
-                if (nameValue.equals(mainMealList.get(i).getStrMeal())) {
-                    mealObj = mainMealList.get(i);
-                }
-            }
-
-            Log.d("TAG", "Index cua meal la " + mealObj.toString());
+            Log.d("TAG", "Meal trong day la: " + mainMealList.get(5).toString());
 
             ImageButton rate = (ImageButton) findViewById(R.id.ratingBarRecipe);
             ImageButton btnSave = (ImageButton) findViewById(R.id.btn_save_recipe);
@@ -104,7 +88,7 @@ public class RecipeActivity extends AppCompatActivity {
 
             // Current meal position
             // Get one meal object
-            // Meal mealObj = mainMealList.get(Integer.parseInt(currentID));
+            Meal mealObj = mainMealList.get(7);
 
             // Meal obj name
             TextView mealObjName = (TextView) findViewById(R.id.name_recipe);
@@ -134,17 +118,16 @@ public class RecipeActivity extends AppCompatActivity {
                         .into(mealObjImage);
             }
 
-            Meal finalMealObj = mealObj;
             mealObjImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Log.d("Hello","The function OnClick is called");
                     AlertDialog alert = new AlertDialog.Builder(RecipeActivity.this).create();
                     // alert.setView(mealObjImage);, causing crash, fix later
-                    alert.setTitle(finalMealObj.getStrMeal());
-                    alert.setMessage("AREA: " + finalMealObj.getStrArea()+ "\n\n" +
-                            "CATEGORIES: " + finalMealObj.getStrCategory() + "\n\n" +
-                            "TAGS: " + finalMealObj.getStrTags());
+                    alert.setTitle(mealObj.getStrMeal());
+                    alert.setMessage("AREA: " + mealObj.getStrArea()+ "\n\n" +
+                            "CATEGORIES: " + mealObj.getStrCategory() + "\n\n" +
+                            "TAGS: " + mealObj.getStrTags());
                     alert.show();
                 }
             });
@@ -204,10 +187,9 @@ public class RecipeActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     Log.i(TAG, "Click on back button: ");
                     Toast.makeText(getApplicationContext(),"Home Button",Toast.LENGTH_LONG).show();
-//                    Intent intent = new Intent(RecipeActivity.this, PostMealPage.class);
-//                    //Intent intent = new Intent(MainActivity.this, ActivityUserPage.class);
-//                    startActivity(intent);
-                    finish();
+                    Intent intent = new Intent(RecipeActivity.this, PostMealPage.class);
+                    //Intent intent = new Intent(MainActivity.this, ActivityUserPage.class);
+                    startActivity(intent);
                 }
 
             });
@@ -245,10 +227,6 @@ public class RecipeActivity extends AppCompatActivity {
             /*
             Rating view
             */
-
-            // Get rating obj
-            currentRating = meal.getRating();
-
             rate.setOnClickListener(new View.OnClickListener() {
                 @RequiresApi(api = Build.VERSION_CODES.Q)
                 @Override
@@ -273,11 +251,12 @@ public class RecipeActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
 //                                ratingBar.getRating();
-
                                 }
                             })
                             .setNegativeButton(android.R.string.cancel, null).show();
                 }
+
+
 
             });
 
@@ -286,7 +265,6 @@ public class RecipeActivity extends AppCompatActivity {
             /*
             Youtube View
              */
-            Meal finalMealObj1 = mealObj;
             btnPlay.setOnClickListener(view ->{
                 YouTubePlayerView youTubePlayerView = new YouTubePlayerView(RecipeActivity.this);
                 getLifecycle().addObserver(youTubePlayerView);
@@ -294,7 +272,7 @@ public class RecipeActivity extends AppCompatActivity {
                 youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
                     @Override
                     public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-                        String youtubeURL = finalMealObj1.getStrYoutube();
+                        String youtubeURL = mealObj.getStrYoutube();
 
                         String pattern = "(?<=youtu.be/|watch\\?v=|/videos/|embed\\/)[^#\\&\\?]*";
 
@@ -327,12 +305,12 @@ public class RecipeActivity extends AppCompatActivity {
 
     }
 
-//    // Get rating bar
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        //ratingBar.getRating();
-//    }
+    // Get rating bar
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //ratingBar.getRating();
+    }
 
     public interface firebaseCallback {
         void call(List list);

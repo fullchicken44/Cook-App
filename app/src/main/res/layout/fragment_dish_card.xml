@@ -56,5 +56,4 @@
         android:backgroundTint="@color/white"
         android:src="@drawable/ic_baseline_minimize_24" />
 
-
 </androidx.cardview.widget.CardView>
