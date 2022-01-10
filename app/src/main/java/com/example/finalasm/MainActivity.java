@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
         nav_search.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+            Intent intent = new Intent(MainActivity.this, SearchActivity.class);
             startActivity(intent);
             finish();
         });

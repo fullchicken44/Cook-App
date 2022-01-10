@@ -62,6 +62,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         nav_search = findViewById(R.id.nav_search);
         nav_user = findViewById(R.id.nav_user);
 
+        getCurrentLocation();
+
         nav_menu.setOnClickListener(v -> {
             intent = new Intent(MapsActivity.this, MainActivity.class);
             startActivity(intent);

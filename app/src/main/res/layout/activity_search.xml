@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    tools:context=".SearchActivity">
+
+    <TextView
+        android:id="@+id/searchText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="10dp"
+        android:text="Search"
+        android:fontFamily="@font/baemin"
+        android:textSize="40sp"/>
+
+    <SearchView
+        android:id="@+id/search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/searchText"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/search_bar" />
+
+    <RelativeLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/navigation_bar"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+            <ImageButton
+                android:id="@+id/nav_menu"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/nav_menu"
+                android:scaleType="fitXY" />
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+            <ImageButton
+                android:id="@+id/nav_search"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/nav_search"
+                android:scaleType="fitXY" />
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+            <ImageButton
+                android:id="@+id/nav_user"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/nav_user"
+                android:scaleType="fitXY" />
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_main"
+        android:layout_width="match_parent"
+        android:layout_height="276dp"
+        android:layout_below="@id/search_bar"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="20dp" />
+
+
+</RelativeLayout>
