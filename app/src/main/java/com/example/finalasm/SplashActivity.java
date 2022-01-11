@@ -18,7 +18,6 @@ public class SplashActivity extends AppCompatActivity {
 
         lottieAnimationView = (LottieAnimationView) findViewById(R.id.lottie);
 
-//        lottieAnimationView.animate().setDuration(1000).setStartDelay(4000);
 
         Thread thread = new Thread() {
             public void run() {

@@ -1,6 +1,7 @@
 package com.example.finalasm;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     List<User> mainUserList = new ArrayList<>();
     FirebaseDB provider = new FirebaseDB();
     RecyclerView rcvCategory;
-    CategoryAdapter categoryAdapter;
+    MealAdapter mealAdapter;
 
 
     @Override
@@ -56,26 +57,26 @@ public class MainActivity extends AppCompatActivity {
                 mainUserList.add(user);
             }
             if (firebaseUser == null) {
-                categoryAdapter = new CategoryAdapter(MealAdapter.VERTICAL, this);
+                mealAdapter = new MealAdapter(this, MealAdapter.HORIZONTAL);
                 username.setText("Guest");
             } else {
                 for (User user : mainUserList) {
                     if (firebaseUser.getEmail().equals(user.getUserEmail())) {
-                        categoryAdapter = new CategoryAdapter(MealAdapter.VERTICAL_ADD, this);
+                        mealAdapter = new MealAdapter(this, MealAdapter.HORIZONTAL_ADD);
                         username.setText(user.getUserName());
                     }
                 }
             }
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-            rcvCategory.setLayoutManager(linearLayoutManager);
-            rcvCategory.setAdapter(categoryAdapter);
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+            rcvCategory.setLayoutManager(gridLayoutManager);
+            rcvCategory.setAdapter(mealAdapter);
 
             provider.fetchAllMeal(mealDb, mealList -> {
                 for (int i = 0; i < mealList.size(); i++) {
                     meal = (Meal) mealList.get(i);
                     mainMealList.add(meal);
                 }
-                categoryAdapter.setData(getListCategory());
+                mealAdapter.setData(this,mainMealList,new ArrayList<>());
             });
         });
     }
@@ -96,26 +97,26 @@ public class MainActivity extends AppCompatActivity {
                 mainUserList.add(user);
             }
             if (firebaseUser == null) {
-                categoryAdapter = new CategoryAdapter(MealAdapter.VERTICAL, this);
+                mealAdapter = new MealAdapter(this, MealAdapter.HORIZONTAL);
                 username.setText("Guest");
             } else {
                 for (User user : mainUserList) {
                     if (firebaseUser.getEmail().equals(user.getUserEmail())) {
-                        categoryAdapter = new CategoryAdapter(MealAdapter.VERTICAL_ADD, this);
+                        mealAdapter = new MealAdapter(this, MealAdapter.HORIZONTAL_ADD);
                         username.setText(user.getUserName());
                     }
                 }
             }
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-            rcvCategory.setLayoutManager(linearLayoutManager);
-            rcvCategory.setAdapter(categoryAdapter);
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+            rcvCategory.setLayoutManager(gridLayoutManager);
+            rcvCategory.setAdapter(mealAdapter);
 
             provider.fetchAllMeal(mealDb, mealList -> {
                 for (int i = 0; i < mealList.size(); i++) {
                     meal = (Meal) mealList.get(i);
                     mainMealList.add(meal);
                 }
-                categoryAdapter.setData(getListCategory());
+                mealAdapter.setData(this,mainMealList,new ArrayList<>());
             });
         });
 
@@ -129,12 +130,6 @@ public class MainActivity extends AppCompatActivity {
         nav_user = findViewById(R.id.nav_user);
 
         firebaseAuth.signOut();
-//        userAvatar.setOnClickListener(v -> {
-//            if (firebaseUser == null) {
-//                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-//                startActivity(intent);
-//            }
-//        });
 
         nav_user.setOnClickListener(v -> {
             Intent intent;
@@ -152,12 +147,6 @@ public class MainActivity extends AppCompatActivity {
 
             startActivity(intent);
         });
-    }
-
-    private List<Category> getListCategory(){
-        List<Category> listCategory = new ArrayList<>();
-        listCategory.add(new Category("All Meal", mainMealList));
-        return listCategory;
     }
 
     private int randomInt(int size) {

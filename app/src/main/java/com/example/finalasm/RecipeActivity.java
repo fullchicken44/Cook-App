@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -37,6 +38,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,6 +56,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 public class RecipeActivity extends AppCompatActivity {
@@ -68,6 +72,11 @@ public class RecipeActivity extends AppCompatActivity {
     Meal mealObj;
     String nameValue;
     Double currentRating;
+    int hourTimer;
+    int minuteTimer;
+    ImageButton btnTimer;
+    LinearLayout layoutTimer;
+    TextView txtTimer;
 
 
     @SuppressLint("WrongConstant")
@@ -79,6 +88,9 @@ public class RecipeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         nameValue = (String) intent.getExtras().get("name");
 
+        btnTimer = (ImageButton) findViewById(R.id.btn_timer_recipe);
+        layoutTimer = (LinearLayout) findViewById(R.id.layout_timer_recipe);
+        txtTimer = (TextView) findViewById(R.id.txt_timer_recipe);
 
         // Meals
         firebaseHandler.fetchAllMeal(mealDb, mealList -> {
@@ -93,6 +105,7 @@ public class RecipeActivity extends AppCompatActivity {
                     mealObj = mainMealList.get(i);
                 }
             }
+
 
             Log.d("TAG", "Index cua meal la " + mealObj.toString());
 
@@ -214,31 +227,8 @@ public class RecipeActivity extends AppCompatActivity {
             /*
             Button timer view
              */
-            ImageButton btnTimer = (ImageButton) findViewById(R.id.btn_timer_recipe);
             btnTimer.setOnClickListener(v -> {
-                AlertDialog.Builder builder = new AlertDialog.Builder(RecipeActivity.this);
-                builder.create();
-                final EditText timer = new EditText (RecipeActivity.this);
-                timer.setHint("Time to countdown");
-                timer.setInputType(InputType.TYPE_CLASS_NUMBER);
-                builder.setView(timer);
-                builder.setTitle("SET TIMER:")
-                        .setPositiveButton("START", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                new CountDownTimer(Integer.parseInt(timer.getText().toString())*1000, 1000) {
-
-                                    public void onTick(long millisUntilFinished) {
-                                        Toast.makeText(RecipeActivity.this, "seconds remaining: " + millisUntilFinished / 1000, Toast.LENGTH_SHORT).show();
-                                    }
-
-                                    public void onFinish() {
-                                        Toast.makeText(RecipeActivity.this, "done!", Toast.LENGTH_SHORT).show();
-                                    }
-                                }.start();
-                            }
-                        })
-                        .setNegativeButton(android.R.string.cancel, null).show();
+                timePicker();
             });
 
             /*
@@ -322,16 +312,40 @@ public class RecipeActivity extends AppCompatActivity {
 
         });
 
-
-
     }
 
-//    // Get rating bar
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        //ratingBar.getRating();
-//    }
+    public void timePicker(){
+        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                hourTimer = hourOfDay;
+                minuteTimer = minute;
+                new CountDownTimer((hourTimer*60*60 + minuteTimer*60)*1000, 1000) {
+
+                    public void onTick(long millisUntilFinished) {
+                        btnTimer.setClickable(false);
+                        layoutTimer.setVisibility(View.VISIBLE);
+                        millisUntilFinished += 1000;
+                        String sDuration = String.format(Locale.ENGLISH, "%02d:%02d"
+                                , TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)
+                                , TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) -
+                                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
+                        txtTimer.setText(sDuration);
+                    }
+
+                    public void onFinish() {
+                        layoutTimer.setVisibility(View.INVISIBLE);
+                        btnTimer.setClickable(true);
+                        Toast.makeText(RecipeActivity.this, "Time's run out!", Toast.LENGTH_SHORT).show();
+                    }
+                }.start();
+            }
+        };
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, android.app.AlertDialog.THEME_HOLO_LIGHT,onTimeSetListener,hourTimer,minuteTimer, true);
+        timePickerDialog.setTitle("Time to CountDown");
+        timePickerDialog.show();
+
+    }
 
     public interface firebaseCallback {
         void call(List list);
