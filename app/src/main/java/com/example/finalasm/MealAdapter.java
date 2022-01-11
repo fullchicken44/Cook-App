@@ -3,10 +3,12 @@ package com.example.finalasm;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +31,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
     public static final int VERTICAL_REMOVE = 2;
     public static final int VERTICAL = 3;
     public static final int CATEGORY = 4;
+    public static final int HORIZONTAL_ADD = 5;
 
     int type;
 
@@ -68,6 +71,9 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
         else if (type == CATEGORY) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_category_card, parent, false);
         }
+        else if (type == HORIZONTAL_ADD) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_dish_card_horizontal_add, parent, false);
+        }
         return new DishViewHolder(view);
     }
 
@@ -79,17 +85,8 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
                 return;
             } else {
                 holder.nameCate.setText(cate);
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(context, RecipeActivity.class);
-                        intent.putExtra("name", mealList.get(position).getStrMeal());
-                        context.startActivity(intent);
-                    }
-                });
             }
-        }
-        else {
+        } else {
             String imageURL = "https:\\/\\/www.themealdb.com\\/images\\/media\\/meals\\/ysqupp1511640538.jpg";
             Meal meal = mealList.get(position);
             if (meal == null) {
@@ -110,8 +107,24 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
                     context.startActivity(intent);
                 }
             });
+
+        }
+        if (type == VERTICAL_ADD) {
+            holder.buttonAdd.setOnClickListener(v -> {
+                System.out.println("testing");
+            });
+        } else if (type == VERTICAL_REMOVE) {
+            holder.buttonRemove.setOnClickListener(v -> {
+                System.out.println("testing");
+            });
+        } else if (type == HORIZONTAL_ADD) {
+            holder.buttonAddHorizontal.setOnClickListener(v -> {
+                System.out.println("testing");
+            });
         }
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -134,6 +147,9 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
         private ImageView imageDish;
         private TextView nameDish;
         private TextView nameCate;
+        private ImageButton buttonAdd;
+        private ImageButton buttonAddHorizontal;
+        private ImageButton buttonRemove;
 
         public DishViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -142,6 +158,9 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
                 nameCate = itemView.findViewById(R.id.name_category_card);
             }
             else {
+                buttonAdd = (ImageButton) itemView.findViewById(R.id.button_add_dish_card);
+                buttonAddHorizontal = (ImageButton) itemView.findViewById(R.id.button_dish_card_horizontal);
+                buttonRemove = (ImageButton) itemView.findViewById(R.id.button_dish_card_remove);
                 imageDish = itemView.findViewById(R.id.menu_food_display);
                 nameDish = itemView.findViewById(R.id.name_dish_card);
             }

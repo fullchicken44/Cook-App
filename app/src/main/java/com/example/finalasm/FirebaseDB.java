@@ -109,7 +109,7 @@ public class FirebaseDB {
     public Meal fetchMealById(List<Meal> mealList, String id) {
         Meal mealFound = new Meal();
         for (int i = 0; i < mealList.size();i++) {
-            if (id.equals(mealList.get(i).idMeal)) {
+            if (id.equals(mealList.get(i).getIdMeal())) {
                 mealFound = mealList.get(i);
                 break;
             }

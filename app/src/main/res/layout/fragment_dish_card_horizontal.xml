@@ -45,15 +45,4 @@
         android:textColor="@color/white"
         android:textSize="14sp" />
 
-    <ImageButton
-        android:id="@+id/button_dish_card"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="55dp"
-        android:layout_marginStart="20dp"
-        android:background="@drawable/round_square_corner"
-        android:backgroundTint="@color/orangeBaemin"
-        android:src="@drawable/ic_baseline_add_24" />
-
-
 </androidx.cardview.widget.CardView>

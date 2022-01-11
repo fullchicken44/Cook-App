@@ -24,7 +24,7 @@
             android:layout_width="130dp"
             android:layout_height="130dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/slack_pic" />
+            android:src="@drawable/chaca" />
     </androidx.cardview.widget.CardView>
 
     <TextView

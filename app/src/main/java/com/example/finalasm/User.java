@@ -12,9 +12,9 @@ import java.util.Map;
 
 @IgnoreExtraProperties
 public class User {
-    String userEmail ="", userName = "";
-    List<String> collection, mealCreate;
-    boolean isAdmin;
+    private String userEmail ="", userName = "";
+    private List<String> collection, mealCreate;
+    private boolean isAdmin;
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)

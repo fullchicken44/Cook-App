@@ -59,7 +59,7 @@
                     android:id="@+id/text_instruction"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Testing 123"
+                    android:text="Loading..."
                     android:textAlignment="center"
                     />
 
@@ -100,7 +100,7 @@
             android:singleLine="true"
             android:fontFamily="@font/baemin"
             android:scrollHorizontally="true"
-            android:text="Burger Cheese"
+            android:text="loading..."
             android:textColor="@color/colorMain"
             android:textSize="30dp" />
 
