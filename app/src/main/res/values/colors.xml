@@ -20,5 +20,6 @@
     <color name="colorProgressBar">#FFCE511C</color>
     <color name="colorTextView">#83898E</color>
     <color name="orangeBaemin">#F06400</color>
+    <color name="greenBaemin">#92D400</color>
 
 </resources>

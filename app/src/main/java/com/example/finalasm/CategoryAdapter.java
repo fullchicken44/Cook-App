@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
@@ -58,7 +59,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         else if (type == MealAdapter.VERTICAL_REMOVE) {
             mealAdapter = new MealAdapter(context,MealAdapter.VERTICAL_REMOVE);
         }
-        mealAdapter.setData(context,category.getMealList());
+        mealAdapter.setData(context, category.getMealList(), new ArrayList<String>());
 
         holder.mealList.setAdapter(mealAdapter);
     }

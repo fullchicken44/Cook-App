@@ -73,15 +73,27 @@
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_search"
+        android:id="@+id/recycler_cate_search"
         android:layout_width="match_parent"
-        android:layout_height="455dp"
-        android:layout_above="@+id/navigation"
+        android:layout_height="60dp"
         android:layout_below="@id/search_bar"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="0dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_search"
+        android:layout_width="match_parent"
+        android:layout_height="466dp"
+        android:layout_above="@+id/navigation"
+        android:layout_below="@id/recycler_cate_search"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
         android:layout_marginBottom="5dp" />
 
 

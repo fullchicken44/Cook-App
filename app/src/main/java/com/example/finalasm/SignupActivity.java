@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class SignupActivity extends AppCompatActivity {
@@ -80,11 +81,12 @@ public class SignupActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     boolean isReg;
                     if (task.isSuccessful()) {
-                        User user = new User(email, name, new ArrayList<>(), new ArrayList<>(), false);
+                        List<String> signUp = new ArrayList<String>(Collections.singleton("0"));
+                        User user = new User(email, name, signUp, signUp, false);
                         // If sign up success
                         String key = userDb.push().getKey();
                         assert key != null;
-                        userDb.child(key).setValue(user).addOnSuccessListener(unused -> Log.d("REGISTER: ","SUCCESS"));
+                        userDb.child(key).setValue(user).addOnSuccessListener(unused -> Log.d("REGISTER: ", "SUCCESS"));
                         Log.d("Registration successfully.", user.toString());
                         isReg = true;
                     } else {

@@ -160,6 +160,11 @@ public class MainActivity extends AppCompatActivity {
         return listCategory;
     }
 
+    private int randomInt(int size) {
+        int min = 0;
+        return min;
+    }
+
     public interface firebaseCallback {
         void call(List list);
     }
