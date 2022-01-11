@@ -15,6 +15,7 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +45,6 @@ public class PostMealPage extends AppCompatActivity {
     DatabaseReference testuserDb = FirebaseDatabase.getInstance(dbAPI).getReference("testusers").child("users");
     DatabaseReference mealDb = FirebaseDatabase.getInstance(dbAPI).getReference("meal");
 
-    private Button imageAdd;
     private Uri imageUri;
     private static final  int IMAGE_REQUEST = 2;
 
@@ -54,15 +54,16 @@ public class PostMealPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_meal_page);
-
-        imageAdd = findViewById(R.id.button_image_post_meal);
-
-
+        ImageButton imageAdd = findViewById(R.id.button_image_post_meal);
         imageAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openImage();
             }
+        });
+
+        firebaseHandler.fetchAllMeal(mealDb, mealList -> {
+
         });
     }
 
@@ -224,6 +225,9 @@ public class PostMealPage extends AppCompatActivity {
         meal.setStrMeasure18(measureList.get(17));
         meal.setStrMeasure19(measureList.get(18));
         meal.setStrMeasure20(measureList.get(19));
+    }
 
+    public interface firebaseCallback {
+        void call(List list);
     }
 }

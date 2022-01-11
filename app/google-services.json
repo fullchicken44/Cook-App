@@ -1,34 +1,121 @@
 {
   "project_info": {
-    "project_number": "878186206935",
-    "firebase_url": "https://finalandroid-e100e-default-rtdb.asia-southeast1.firebasedatabase.app",
-    "project_id": "finalandroid-e100e",
-    "storage_bucket": "finalandroid-e100e.appspot.com"
+    "project_number": "683630266917",
+    "firebase_url": "https://android-2a378-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "android-2a378",
+    "storage_bucket": "android-2a378.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:878186206935:android:472280d0c11b5985ae0292",
+        "mobilesdk_app_id": "1:683630266917:android:0eeeacc39dc62afe9c8dcc",
         "android_client_info": {
-          "package_name": "com.example.finalasm"
+          "package_name": "com.example.additionalcookapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "878186206935-d9fep26eur3oitchpg9jqv61jfbetbtn.apps.googleusercontent.com",
+          "client_id": "683630266917-gdg854ughjnrbmrqhod1qk12s93nuge4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDyD3GVbDzUz4JGU5GMvl7X2A8BMG80kyk"
+          "current_key": "AIzaSyAzHsjGK1Jx3q1bIQg0TA9Rdw5uB3Djp1E"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "878186206935-d9fep26eur3oitchpg9jqv61jfbetbtn.apps.googleusercontent.com",
+              "client_id": "683630266917-gdg854ughjnrbmrqhod1qk12s93nuge4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:683630266917:android:a684dd34518dd46f9c8dcc",
+        "android_client_info": {
+          "package_name": "com.example.cookapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "683630266917-gdg854ughjnrbmrqhod1qk12s93nuge4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzHsjGK1Jx3q1bIQg0TA9Rdw5uB3Djp1E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "683630266917-gdg854ughjnrbmrqhod1qk12s93nuge4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:683630266917:android:17fa11a2075bcc309c8dcc",
+        "android_client_info": {
+          "package_name": "com.example.covidapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "683630266917-gdg854ughjnrbmrqhod1qk12s93nuge4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzHsjGK1Jx3q1bIQg0TA9Rdw5uB3Djp1E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "683630266917-gdg854ughjnrbmrqhod1qk12s93nuge4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:683630266917:android:aac6500df699f91f9c8dcc",
+        "android_client_info": {
+          "package_name": "com.example.finalasm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "683630266917-gdg854ughjnrbmrqhod1qk12s93nuge4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzHsjGK1Jx3q1bIQg0TA9Rdw5uB3Djp1E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "683630266917-gdg854ughjnrbmrqhod1qk12s93nuge4.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

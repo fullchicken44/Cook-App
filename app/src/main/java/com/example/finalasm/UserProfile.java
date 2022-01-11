@@ -116,6 +116,7 @@ public class UserProfile extends AppCompatActivity {
         post.setOnClickListener(v->{
             Intent i = new Intent(UserProfile.this,PostMealPage.class);
             startActivityForResult(i,170);
+            System.out.println("start post activity");
         });
 
         image_user.setOnClickListener(v -> {
