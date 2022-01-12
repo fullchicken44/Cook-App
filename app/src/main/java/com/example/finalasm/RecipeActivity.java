@@ -253,7 +253,10 @@ public class RecipeActivity extends AppCompatActivity {
                     final RatingBar ratingBar = new RatingBar(RecipeActivity.this);
                     Integer intRatingbar = Math.toIntExact((Math.round(meal.getRating() * 100.0 / 100.0)));
 
-                    ratingBar.setMax(intRatingbar); // Round the star to the current
+//                    TextView rateView = (TextView) findViewById(R.id.rate_num_recipe);
+//                    rateView.setText((int) meal.getRating());
+
+                    ratingBar.setMax(5); // Round the star to the current
                     rated.setText("Rate: " + (currentRating * 100.00) / 100.00);
                     Log.i("TAG", "Current rating: " + currentRating );
 
