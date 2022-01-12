@@ -72,6 +72,7 @@ public class RecipeActivity extends AppCompatActivity {
     Meal mealObj;
     String nameValue;
     Double currentRating;
+    Double currentVote;
     int hourTimer;
     int minuteTimer;
     ImageButton btnTimer;
@@ -235,42 +236,59 @@ public class RecipeActivity extends AppCompatActivity {
             Rating view
             */
 
-            // Get rating obj
+            // Get rating obj and vote obj
             currentRating = meal.getRating();
+            currentVote = meal.getVote();
 
+            // Set rate on Click for user to click in
             rate.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("SetTextI18n")
                 @RequiresApi(api = Build.VERSION_CODES.Q)
                 @Override
                 public void onClick(View v) {
                     final AlertDialog.Builder builder = new AlertDialog.Builder(RecipeActivity.this);
                     builder.create();
-//                final TextView rated = new TextView (MainActivity.this);
-//                final TextView voteNum = new TextView (MainActivity.this);
+                    final TextView rated = new TextView (RecipeActivity.this);
+                    final TextView voteNum = new TextView (RecipeActivity.this);
                     final RatingBar ratingBar = new RatingBar(RecipeActivity.this);
                     ratingBar.setMax(5);
-//                rated.setText("Rate: ");
-//                voteNum.setText("Number of Votes: ");
+                    rated.setText("Rate: " + currentRating);
+                    voteNum.setText("Number of Votes: " + currentVote);
                     LinearLayout layout = new LinearLayout(RecipeActivity.this);
+
+                    // Add layout
                     layout.setOrientation(LinearLayout.VERTICAL);
-//                layout.addView(rated);
-//                layout.addView(voteNum);
+                    layout.addView(rated);
+                    layout.addView(voteNum);
                     layout.addView(ratingBar);
                     layout.setPadding(100,100,   100,10);
                     builder.setView(layout);
+
+                    // Set user onClick to edit current rating
                     builder.setTitle("RATE THIS RECIPE")
                             .setPositiveButton("SUBMIT", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-//                                ratingBar.getRating();
+                                    // Get user rating
+                                    ratingBar.getRating();
 
+                                    // Set new vote since the number of people rate increase
+                                    currentVote = currentVote + 1;
+
+                                    // Set new vote for meal
+                                    meal.setVote(currentVote);
+
+                                    // New rating = (oldRate * N0 of vote+ newRate) / (N0 of vote +1)
+                                    currentRating = (meal.getRating() * meal.getVote()) / (currentVote);
+
+                                    // Set the new rating to the meal db
+                                    meal.setRating(currentRating);
                                 }
                             })
                             .setNegativeButton(android.R.string.cancel, null).show();
                 }
 
             });
-
-
 
             /*
             Youtube View
