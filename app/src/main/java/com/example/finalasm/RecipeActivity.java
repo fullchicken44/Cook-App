@@ -35,6 +35,8 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,12 +74,16 @@ public class RecipeActivity extends AppCompatActivity {
     Meal mealObj;
     String nameValue;
     Double currentRating;
-    Double currentVote;
+    int currentVote;
     int hourTimer;
     int minuteTimer;
     ImageButton btnTimer;
     LinearLayout layoutTimer;
     TextView txtTimer;
+    TextView txtRate;
+    TextView txtRateCount;
+    ListView listIngre;
+    List<String> listIngredient;
 
 
     @SuppressLint("WrongConstant")
@@ -92,6 +98,9 @@ public class RecipeActivity extends AppCompatActivity {
         btnTimer = (ImageButton) findViewById(R.id.btn_timer_recipe);
         layoutTimer = (LinearLayout) findViewById(R.id.layout_timer_recipe);
         txtTimer = (TextView) findViewById(R.id.txt_timer_recipe);
+        txtRate = findViewById(R.id.rate_num_recipe);
+        txtRateCount = findViewById(R.id.vote_num_recipe);
+
 
         // Meals
         firebaseHandler.fetchAllMeal(mealDb, mealList -> {
@@ -107,7 +116,6 @@ public class RecipeActivity extends AppCompatActivity {
                 }
             }
 
-
             Log.d("TAG", "Index cua meal la " + mealObj.toString());
 
             ImageButton rate = (ImageButton) findViewById(R.id.ratingBarRecipe);
@@ -122,7 +130,6 @@ public class RecipeActivity extends AppCompatActivity {
             // Meal obj name
             TextView mealObjName = (TextView) findViewById(R.id.name_recipe);
             mealObjName.setText(mealObj.getStrMeal()); //name Dish5
-            //mealObjName.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 13.f); //Lower the size, enable will cause marquee to stop working
 
             // Need all three function to make the test movable;
             mealObjName.setSelected(true);
@@ -167,8 +174,8 @@ public class RecipeActivity extends AppCompatActivity {
             Ingredients view
              */
 
-            ListView listIngre = (ListView) findViewById(R.id.list_ingredient_recipe);
-            List<String> listIngredient = new ArrayList<>();
+            listIngre = (ListView) findViewById(R.id.list_ingredient_recipe);
+            listIngredient = new ArrayList<>();
             listIngredient.add(mealObj.getStrIngredient1()+"\t"+mealObj.getStrMeasure1());
             listIngredient.add(mealObj.getStrIngredient2()+"\t"+mealObj.getStrMeasure2());
             listIngredient.add(mealObj.getStrIngredient3()+"\t"+mealObj.getStrMeasure3());
@@ -189,12 +196,21 @@ public class RecipeActivity extends AppCompatActivity {
             listIngredient.add(mealObj.getStrIngredient18()+"\t"+mealObj.getStrMeasure18());
             listIngredient.add(mealObj.getStrIngredient19()+"\t"+mealObj.getStrMeasure19());
             listIngredient.add(mealObj.getStrIngredient20()+"\t"+mealObj.getStrMeasure20());
+            System.out.println("//"+listIngredient.get(18)+"//");
+            List<String> listTemp = new ArrayList<>();
 
+            // TO DO lien lac Billie for info
+            for (int i = 0; i < listIngredient.size(); i++){
+                if (listIngredient.get(i).equals("\t ")){
+                    continue;
+                }
+                listTemp.add(listIngredient.get(i).trim());
+            }
             ArrayAdapter adapter = new ArrayAdapter(
                     RecipeActivity.this,
                     android.R.layout.simple_list_item_checked,
                     android.R.id.text1,
-                    listIngredient);
+                    listTemp);
             listIngre.setAdapter(adapter);
 
             for(int i=0 ; i< listIngredient.size(); i++ )  {
@@ -239,6 +255,8 @@ public class RecipeActivity extends AppCompatActivity {
             // Get rating obj and vote obj
             currentRating = meal.getRating();
             currentVote = meal.getVote();
+            txtRate.setText(currentRating.toString());
+            txtRateCount.setText(currentVote+" "+"vote(s)");
 
             // Set rate on Click for user to click in
             rate.setOnClickListener(new View.OnClickListener() {
@@ -252,9 +270,6 @@ public class RecipeActivity extends AppCompatActivity {
                     final TextView voteNum = new TextView (RecipeActivity.this);
                     final RatingBar ratingBar = new RatingBar(RecipeActivity.this);
                     Integer intRatingbar = Math.toIntExact((Math.round(meal.getRating() * 100.0 / 100.0)));
-
-//                    TextView rateView = (TextView) findViewById(R.id.rate_num_recipe);
-//                    rateView.setText((int) meal.getRating());
 
                     ratingBar.setMax(5); // Round the star to the current
                     rated.setText("Rate: " + (currentRating * 100.00) / 100.00);
@@ -270,7 +285,7 @@ public class RecipeActivity extends AppCompatActivity {
                     layout.addView(ratingBar);
                     layout.setPadding(100,100,   100,10);
                     builder.setView(layout);
-
+                    //TO DO
                     // Set user onClick to edit current rating
                     builder.setTitle("RATE THIS RECIPE")
                             .setPositiveButton("SUBMIT", new DialogInterface.OnClickListener() {
@@ -287,9 +302,13 @@ public class RecipeActivity extends AppCompatActivity {
 
                                     // New rating = (oldRate * N0 of vote+ newRate) / (N0 of vote +1)
                                     currentRating = (currentRating * meal.getVote() + ratingBar.getRating()) / (currentVote);
+                                    currentRating = round(currentRating,1);
 
                                     // Set the new rating to the meal db
                                     meal.setRating(currentRating);
+
+                                    txtRate.setText(currentRating.toString());
+                                    txtRateCount.setText(currentVote+" "+"vote(s)");
                                 }
                             })
                             .setNegativeButton(android.R.string.cancel, null).show();
@@ -374,6 +393,14 @@ public class RecipeActivity extends AppCompatActivity {
 
     public interface firebaseCallback {
         void call(List list);
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
 

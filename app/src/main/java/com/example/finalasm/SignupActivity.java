@@ -82,7 +82,7 @@ public class SignupActivity extends AppCompatActivity {
                     boolean isReg;
                     if (task.isSuccessful()) {
                         List<String> signUp = new ArrayList<String>(Collections.singleton("0"));
-                        User user = new User(email, name, signUp, signUp, false);
+                        User user = new User(email, name, signUp, signUp, null, false);
                         // If sign up success
                         String key = userDb.push().getKey();
                         assert key != null;

@@ -86,12 +86,25 @@ public class UserProfile extends AppCompatActivity {
                 user = (User) userList.get(i);
                 mainUserList.add(user);
             }
+
             for (User user : mainUserList) {
                 if (firebaseUser.getEmail().equals(user.getUserEmail())) {
                     currentUser = user;
                     String nameBreakDown = user.getUserName();
                     String[] nameParts = nameBreakDown.split(" ");
                     name_user.setText(nameParts[0].trim());
+
+
+                    //TO DO lay tao attribute url r lay no ve gan vao day
+//                    if (currentUser.get != null) {
+//                        //Embed user profile image to image view
+//                        Picasso.get()
+//                                .load(currentUser.get )
+//                                .centerCrop()
+//                                .fit()
+//                                .into(image_user);
+//                    }
+
                 }
             }
             provider.fetchAllMeal(mealDb, mealList -> {
@@ -122,7 +135,6 @@ public class UserProfile extends AppCompatActivity {
         image_user.setOnClickListener(v -> {
             //openImage();
             AlertDialog alert = new AlertDialog.Builder(UserProfile.this).create();
-            // alert.setView(mealObjImage);, causing crash, fix later
             alert.setTitle("Change profile picture");
             alert.setMessage("Click upload to upload a new image!");
             alert.setButton(AlertDialog.BUTTON_POSITIVE, "Upload",

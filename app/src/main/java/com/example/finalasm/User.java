@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,16 +16,18 @@ public class User {
     private String userEmail ="", userName = "";
     private List<String> collection, mealCreate;
     private boolean isAdmin;
+    private URL urlProfile;
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public User(String userEmail, String userName, List<String> collection, List<String> mealCreate, boolean isAdmin) {
+    public User(String userEmail, String userName, List<String> collection, List<String> mealCreate, URL urlProfile, boolean isAdmin) {
         this.userEmail = userEmail;
         this.userName = userName;
         this.collection = collection;
         this.mealCreate = mealCreate;
+        this.urlProfile = urlProfile;
         this.isAdmin = isAdmin;
     }
 
@@ -36,9 +39,18 @@ public class User {
         result.put("userName", userName);
         result.put("collection", collection);
         result.put("mealCreate", mealCreate);
+        result.put("urlProfile", urlProfile);
         result.put("isAdmin", isAdmin);
 
         return result;
+    }
+
+    public URL getUrlProfile() {
+        return urlProfile;
+    }
+
+    public void setUrlProfile(URL urlProfile) {
+        this.urlProfile = urlProfile;
     }
 
     public String getUserEmail() {

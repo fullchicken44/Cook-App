@@ -109,17 +109,18 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
             });
 
         }
+        //TO DO
         if (type == VERTICAL_ADD) {
             holder.buttonAdd.setOnClickListener(v -> {
-                System.out.println("testing");
+                System.out.println("add to save collection/ check thu trong collection da co no chua");
             });
         } else if (type == VERTICAL_REMOVE) {
             holder.buttonRemove.setOnClickListener(v -> {
-                System.out.println("testing");
+                System.out.println("delete from save collection");
             });
         } else if (type == HORIZONTAL_ADD) {
             holder.buttonAddHorizontal.setOnClickListener(v -> {
-                System.out.println("testing");
+                System.out.println("add to save collection/ check thu trong collection da co no chua");
             });
         }
     }
