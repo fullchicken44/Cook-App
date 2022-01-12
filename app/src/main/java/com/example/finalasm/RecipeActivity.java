@@ -251,8 +251,15 @@ public class RecipeActivity extends AppCompatActivity {
                     final TextView rated = new TextView (RecipeActivity.this);
                     final TextView voteNum = new TextView (RecipeActivity.this);
                     final RatingBar ratingBar = new RatingBar(RecipeActivity.this);
-                    ratingBar.setMax(5);
-                    rated.setText("Rate: " + currentRating);
+                    Integer intRatingbar = Math.toIntExact((Math.round(meal.getRating() * 100.0 / 100.0)));
+
+//                    TextView rateView = (TextView) findViewById(R.id.rate_num_recipe);
+//                    rateView.setText((int) meal.getRating());
+
+                    ratingBar.setMax(5); // Round the star to the current
+                    rated.setText("Rate: " + (currentRating * 100.00) / 100.00);
+                    Log.i("TAG", "Current rating: " + currentRating );
+
                     voteNum.setText("Number of Votes: " + currentVote);
                     LinearLayout layout = new LinearLayout(RecipeActivity.this);
 
@@ -279,7 +286,7 @@ public class RecipeActivity extends AppCompatActivity {
                                     meal.setVote(currentVote);
 
                                     // New rating = (oldRate * N0 of vote+ newRate) / (N0 of vote +1)
-                                    currentRating = (meal.getRating() * meal.getVote()) / (currentVote);
+                                    currentRating = (currentRating * meal.getVote() + ratingBar.getRating()) / (currentVote);
 
                                     // Set the new rating to the meal db
                                     meal.setRating(currentRating);
