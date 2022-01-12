@@ -10,7 +10,8 @@ public class Meal {
     private String strDrinkAlternate= "";
     private String strInstructions= "";
     private String strMealThumb= "", strTags= "", strYoutube= "", strImageSource= "", dateModified= "";
-    private double rating, vote;
+    private double rating;
+    private int vote;
     private String strIngredient1 = "", strIngredient2= "", strIngredient3= "", strIngredient4= "", strIngredient5= "", strIngredient6= "", strIngredient7= "", strIngredient8= "", strIngredient9= "",
             strIngredient10= "", strIngredient11= "", strIngredient12= "", strIngredient13= "", strIngredient14= "", strIngredient15= "", strIngredient16= "", strIngredient17= "", strIngredient18= "",
             strIngredient19= "", strIngredient20= "";
@@ -85,11 +86,11 @@ public class Meal {
         this.rating = rating;
     }
 
-    public double getVote() {
+    public int getVote() {
         return vote;
     }
 
-    public void setVote(double vote) {
+    public void setVote(int vote) {
         this.vote = vote;
     }
 
