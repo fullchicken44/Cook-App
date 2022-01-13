@@ -48,6 +48,20 @@ public class SearchActivity extends AppCompatActivity {
         search_bar = findViewById(R.id.search_bar);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
+        nav_menu = findViewById(R.id.nav_menu);
+        nav_user = findViewById(R.id.nav_user);
+
+        nav_menu.setOnClickListener(v -> {
+            intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        nav_user.setOnClickListener(v-> {
+            intent = new Intent(this, UserProfile.class);
+            startActivity(intent);
+            finish();
+        });
 
         // Meals
         provider.fetchAllMeal(mealDb, mealList -> {

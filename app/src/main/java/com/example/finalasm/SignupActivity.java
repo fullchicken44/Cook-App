@@ -81,7 +81,7 @@ public class SignupActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     boolean isReg;
                     if (task.isSuccessful()) {
-                        List<String> signUp = new ArrayList<String>(Collections.singleton("0"));
+                        List<String> signUp = new ArrayList<String>(Collections.singleton(""));
                         User user = new User(email, name, signUp, signUp, null, false);
                         // If sign up success
                         String key = userDb.push().getKey();

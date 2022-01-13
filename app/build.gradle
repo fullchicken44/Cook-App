@@ -60,4 +60,12 @@ dependencies {
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.26'
     implementation 'com.airbnb.android:lottie:4.2.1'
     implementation 'com.google.firebase:firebase-storage:20.0.0'
+
+    implementation 'com.akexorcist:google-direction-library:1.2.1'
+    implementation 'com.google.maps.android:android-maps-utils:2.2.3'
+    implementation 'com.google.maps.android:maps-utils-ktx:3.3.0'
+    implementation 'com.google.maps:google-maps-services:1.0.1'
+    implementation 'com.google.android.gms:play-services-location:19.0.1'
+    implementation 'com.google.android.gms:play-services-location:19.0.1'
+    implementation 'com.github.niqo01.rxplayservices:rx-play-services-location:0.4.0'
 }
