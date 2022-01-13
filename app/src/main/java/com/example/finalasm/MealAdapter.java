@@ -135,19 +135,20 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
                     holder.buttonAdd.setOnClickListener(v -> {
                         if (currentUser.getCollection().contains(String.valueOf(position))) {
                             Toast.makeText(context, "This meal is already in your collection", Toast.LENGTH_LONG).show();
-                        } else {
-                            meal = mealList.get(position + 1);
+                        } else if (currentUser.getCollection().get(0).equals("")) {
+                                currentUser.getCollection().remove(0);
+                            }
+                            meal = mealList.get(position);
                             currentUser.getCollection().add(String.valueOf(position));
                             Log.d("SUCCESS", "Added " + meal.getStrMeal() + " to your collection");
                             userDb.child(key).setValue(currentUser).addOnSuccessListener(unused -> Log.d("UPDATE: ", "UPDATED USER COLLECTION"));
-                        }
-                        System.out.println("add to save collection/ check thu trong collection da co no chua");
+
                     });
 
                 } else if (type == VERTICAL_REMOVE) {
                     holder.buttonRemove.setOnClickListener(v -> {
                         meal = mealList.get(position);
-                        currentUser.getCollection().remove(position + 1);
+                        currentUser.getCollection().remove(position);
                         userDb.child(key).setValue(currentUser).addOnSuccessListener(unused -> Log.d("DELETE: ", "DELETE " + meal.getStrMeal() + " FROM COLLECTION"));
                         System.out.println("delete from save collection");
                     });
@@ -156,16 +157,17 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
                     holder.buttonAddHorizontal.setOnClickListener(v -> {
                         if (currentUser.getCollection().contains(String.valueOf(position))) {
                             Toast.makeText(context, "This meal is already in your collection", Toast.LENGTH_LONG).show();
-                        } else {
-                            meal = mealList.get(position);
-                            currentUser.getCollection().add(String.valueOf(position));
-                            Log.d("SUCCESS", "Added " + meal.getStrMeal() + " to your collection");
-                            userDb.child(key).setValue(currentUser).addOnSuccessListener(unused -> Log.d("UPDATE: ", "UPDATED USER COLLECTION"));
+                        } else if (currentUser.getCollection().get(0).equals("")) {
+                            currentUser.getCollection().remove(0);
                         }
-                        System.out.println("add to save collection/ check thu trong collection da co no chua");
-                    });
+                        meal = mealList.get(position);
+                        currentUser.getCollection().add(String.valueOf(position));
+                        Log.d("SUCCESS", "Added " + meal.getStrMeal() + " to your collection");
+                            userDb.child(key).setValue(currentUser).addOnSuccessListener(unused -> Log.d("UPDATE: ", "UPDATED USER COLLECTION"));
 
+                    });
                 }
+
             });
         }
     }

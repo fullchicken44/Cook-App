@@ -118,8 +118,6 @@ public class MainActivity extends AppCompatActivity {
             });
         });
 
-
-
         userAvatar = findViewById(R.id.avatar);
         username = findViewById(R.id.username);
         searchFood = findViewById(R.id.search_food);
@@ -142,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
             intent = new Intent(MainActivity.this, SearchActivity.class);
             startActivity(intent);
         });
+        firebaseAuth.signOut();
     }
 
     private int randomInt(int size) {
