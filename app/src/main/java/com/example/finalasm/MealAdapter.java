@@ -136,8 +136,8 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
                         if (currentUser.getCollection().contains(String.valueOf(position))) {
                             Toast.makeText(context, "This meal is already in your collection", Toast.LENGTH_LONG).show();
                         } else {
-                            meal = mealList.get(position);
-                            currentUser.getCollection().add(meal.getStrMeal());
+                            meal = mealList.get(position + 1);
+                            currentUser.getCollection().add(String.valueOf(position));
                             Log.d("SUCCESS", "Added " + meal.getStrMeal() + " to your collection");
                             userDb.child(key).setValue(currentUser).addOnSuccessListener(unused -> Log.d("UPDATE: ", "UPDATED USER COLLECTION"));
                         }
@@ -147,7 +147,8 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
                 } else if (type == VERTICAL_REMOVE) {
                     holder.buttonRemove.setOnClickListener(v -> {
                         meal = mealList.get(position);
-                        currentUser.getCollection().remove(meal.getStrMeal());
+                        currentUser.getCollection().remove(position + 1);
+                        userDb.child(key).setValue(currentUser).addOnSuccessListener(unused -> Log.d("DELETE: ", "DELETE " + meal.getStrMeal() + " FROM COLLECTION"));
                         System.out.println("delete from save collection");
                     });
 
@@ -157,12 +158,13 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
                             Toast.makeText(context, "This meal is already in your collection", Toast.LENGTH_LONG).show();
                         } else {
                             meal = mealList.get(position);
-                            currentUser.getCollection().add(meal.getStrMeal());
+                            currentUser.getCollection().add(String.valueOf(position));
                             Log.d("SUCCESS", "Added " + meal.getStrMeal() + " to your collection");
-                            userDb.setValue(currentUser).addOnSuccessListener(unused -> Log.d("UPDATE: ", "UPDATED USER COLLECTION"));
+                            userDb.child(key).setValue(currentUser).addOnSuccessListener(unused -> Log.d("UPDATE: ", "UPDATED USER COLLECTION"));
                         }
                         System.out.println("add to save collection/ check thu trong collection da co no chua");
                     });
+
                 }
             });
         }

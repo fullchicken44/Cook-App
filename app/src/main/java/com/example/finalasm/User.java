@@ -16,13 +16,13 @@ public class User {
     private String userEmail ="", userName = "";
     private List<String> collection, mealCreate;
     private boolean isAdmin;
-    private URL urlProfile;
+    private String urlProfile;
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public User(String userEmail, String userName, List<String> collection, List<String> mealCreate, URL urlProfile, boolean isAdmin) {
+    public User(String userEmail, String userName, List<String> collection, List<String> mealCreate, String urlProfile, boolean isAdmin) {
         this.userEmail = userEmail;
         this.userName = userName;
         this.collection = collection;
@@ -45,11 +45,11 @@ public class User {
         return result;
     }
 
-    public URL getUrlProfile() {
+    public String getUrlProfile() {
         return urlProfile;
     }
 
-    public void setUrlProfile(URL urlProfile) {
+    public void setUrlProfile(String urlProfile) {
         this.urlProfile = urlProfile;
     }
 

@@ -87,7 +87,7 @@ public class SignupActivity extends AppCompatActivity {
                     boolean isReg;
                     if (task.isSuccessful()) {
                         List<String> signUp = new ArrayList<String>(Collections.singleton(""));
-                        User user = new User(email, name, signUp, signUp, null, false);
+                        User user = new User(email, name, signUp, signUp, "", false);
                         // If sign up success
                         userDb.child(String.valueOf(key)).setValue(user).addOnSuccessListener(unused -> Log.d("REGISTER: ", "SUCCESS"));
                         Log.d("Registration successfully.", user.toString());

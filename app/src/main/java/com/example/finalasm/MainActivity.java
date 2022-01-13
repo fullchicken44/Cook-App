@@ -89,8 +89,6 @@ public class MainActivity extends AppCompatActivity {
         firebaseUser = firebaseAuth.getCurrentUser();
         rcvCategory = findViewById(R.id.recycler_main);
 
-
-
         provider.fetchAllUser(userDb,userList -> {
             for (int i = 0; i < userList.size(); i++) {
                 user = (User) userList.get(i);
@@ -129,8 +127,6 @@ public class MainActivity extends AppCompatActivity {
         nav_search = findViewById(R.id.nav_search);
         nav_user = findViewById(R.id.nav_user);
 
-        firebaseAuth.signOut();
-
         nav_user.setOnClickListener(v -> {
             Intent intent;
             if (firebaseUser == null) {
@@ -144,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
         nav_search.setOnClickListener(v -> {
             Intent intent;
             intent = new Intent(MainActivity.this, SearchActivity.class);
-
             startActivity(intent);
         });
     }

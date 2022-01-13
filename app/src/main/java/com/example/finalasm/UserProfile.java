@@ -53,10 +53,12 @@ public class UserProfile extends AppCompatActivity {
     User user;
     User currentUser;
     Meal meal;
+    Intent intent;
     List<Meal> savedMeal = new ArrayList<>();
     List<Meal> createMeal = new ArrayList<>();
     private static final int IMAGE_REQUEST = 2;
     private Uri imageUri;
+    int key = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +79,17 @@ public class UserProfile extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rcvCategory.setLayoutManager(linearLayoutManager);
 
+        nav_menu.setOnClickListener(v -> {
+            intent = new Intent(UserProfile.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        nav_search.setOnClickListener(v -> {
+            intent = new Intent(UserProfile.this, SearchActivity.class);
+            startActivity(intent);
+            finish();
+        });
 
         rcvCategory.setAdapter(categoryAdapter);
 
@@ -92,19 +105,11 @@ public class UserProfile extends AppCompatActivity {
                     String nameBreakDown = user.getUserName();
                     String[] nameParts = nameBreakDown.split(" ");
                     name_user.setText(nameParts[0].trim());
-
-
-                    //TO DO lay tao attribute url r lay no ve gan vao day
-//                    if (currentUser.get != null) {
-//                        //Embed user profile image to image view
-//                        Picasso.get()
-//                                .load(currentUser.get )
-//                                .centerCrop()
-//                                .fit()
-//                                .into(image_user);
-//                    }
-
+                    break;
                 }
+
+                //Chỗ này để get index của key để lát nữa biết chỗ để update link ảnh lên db
+                key++;
             }
             provider.fetchAllMeal(mealDb, mealList -> {
                 for (int i = 0; i < mealList.size(); i++) {
@@ -187,6 +192,11 @@ public class UserProfile extends AppCompatActivity {
 
                 pd.dismiss();
                 Toast.makeText(UserProfile.this, "Image upload successful1", Toast.LENGTH_SHORT).show();
+
+                // Url tạo xong r update lên userDB, key là index của user
+                currentUser.setUrlProfile(url);
+                userDb.child(String.valueOf(key)).child("urlProfile").setValue(url);
+
 
                 // After upload image then fetch into the profile picture
                 Picasso.get()
