@@ -17,7 +17,6 @@ import android.util.Log;
 import android.webkit.MimeTypeMap;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -112,12 +111,12 @@ public class UserProfile extends AppCompatActivity {
                     meal = (Meal) mealList.get(i);
                     mainMealList.add(meal);
                     for (int j = 0; j < currentUser.getCollection().size(); j++) {
-                        if (Long.parseLong(currentUser.getCollection().get(j)) == i) {
+                        if (!currentUser.getCollection().get(j).isEmpty() && Long.parseLong(currentUser.getCollection().get(j)) == i) {
                             savedMeal.add(mainMealList.get(i));
                         }
                     }
                     for (int z = 0; z < currentUser.getMealCreate().size(); z++) {
-                        if (Long.parseLong(currentUser.getMealCreate().get(z)) == i) {
+                        if (!currentUser.getMealCreate().get(z).isEmpty() && Long.parseLong(currentUser.getMealCreate().get(z)) == i ) {
                             createMeal.add(mainMealList.get(i));
                         }
                     }
@@ -138,18 +137,10 @@ public class UserProfile extends AppCompatActivity {
             alert.setTitle("Change profile picture");
             alert.setMessage("Click upload to upload a new image!");
             alert.setButton(AlertDialog.BUTTON_POSITIVE, "Upload",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            openImage();
-                        }
-                    });
+                    (dialog, which) -> openImage());
 
             alert.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            alert.dismiss();
-                        }
-                    });
+                    (dialog, which) -> alert.dismiss());
 
             alert.show();
         });
@@ -174,6 +165,7 @@ public class UserProfile extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == IMAGE_REQUEST && resultCode == RESULT_OK){
+            assert data != null;
             imageUri = data.getData();
             uploadImage();
         }
@@ -188,29 +180,21 @@ public class UserProfile extends AppCompatActivity {
         if (imageUri != null) {
             final StorageReference fileRef = FirebaseStorage.getInstance().getReference().child("uploads").child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
 
-            fileRef.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                    fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            String url = uri.toString();
+            fileRef.putFile(imageUri).addOnCompleteListener(task -> fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                String url = uri.toString();
 
-                            Log.d("DownloadUrl", url);
+                Log.d("DownloadUrl", url);
 
-                            pd.dismiss();
-                            Toast.makeText(UserProfile.this, "Image upload successful1", Toast.LENGTH_SHORT).show();
+                pd.dismiss();
+                Toast.makeText(UserProfile.this, "Image upload successful1", Toast.LENGTH_SHORT).show();
 
-                            // After upload image then fetch into the profile picture
-                            Picasso.get()
-                                    .load(url)
-                                    .centerCrop()
-                                    .fit()
-                                    .into(image_user);
-                        }
-                    });
-                }
-            });
+                // After upload image then fetch into the profile picture
+                Picasso.get()
+                        .load(url)
+                        .centerCrop()
+                        .fit()
+                        .into(image_user);
+            }));
         }
     }
 

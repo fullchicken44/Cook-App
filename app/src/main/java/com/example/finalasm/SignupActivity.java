@@ -36,6 +36,7 @@ public class SignupActivity extends AppCompatActivity {
             ("https://finalandroid-e100e-default-rtdb.asia-southeast1.firebasedatabase.app")
             .getReference("user").child("users");
     FirebaseDB provider = new FirebaseDB();
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,21 +50,25 @@ public class SignupActivity extends AppCompatActivity {
         userPassword = findViewById(R.id.userPassword);
         Button signUp = findViewById(R.id.sign_upBtn);
 
-        signUp.setOnClickListener(v -> {
-            String inputEmail = userEmail.getText().toString();
-            String inputPassword = userPassword.getText().toString();
-            String inputName = userFirstName.getText().toString() + " " + userLastName.getText().toString();
-            createAccount(inputName, inputEmail, inputPassword, isReg -> {
-                if (isReg) {
-                    Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-                    intent.putExtra("email", inputEmail);
-                    setResult(RESULT_OK, intent);
-                    finish();
-                } else {
-                    Log.w(TAG, "Error with callback");
-                }
+        provider.fetchAllUser(userDb, userList -> {
+
+            signUp.setOnClickListener(v -> {
+                String inputEmail = userEmail.getText().toString();
+                String inputPassword = userPassword.getText().toString();
+                String inputName = userFirstName.getText().toString() + " " + userLastName.getText().toString();
+                createAccount(inputName, inputEmail, inputPassword,userList.size(), isReg -> {
+                    if (isReg) {
+                        Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                        intent.putExtra("email", inputEmail);
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    } else {
+                        Log.w(TAG, "Error with callback");
+                    }
+                });
             });
-        });
+
+                });
     }
 
     @Override
@@ -76,7 +81,7 @@ public class SignupActivity extends AppCompatActivity {
         }
     }
 
-    private void createAccount(String name, String email, String password, authCallback callback) {
+    private void createAccount(String name, String email, String password, int key, authCallback callback) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     boolean isReg;
@@ -84,9 +89,7 @@ public class SignupActivity extends AppCompatActivity {
                         List<String> signUp = new ArrayList<String>(Collections.singleton(""));
                         User user = new User(email, name, signUp, signUp, null, false);
                         // If sign up success
-                        String key = userDb.push().getKey();
-                        assert key != null;
-                        userDb.child(key).setValue(user).addOnSuccessListener(unused -> Log.d("REGISTER: ", "SUCCESS"));
+                        userDb.child(String.valueOf(key)).setValue(user).addOnSuccessListener(unused -> Log.d("REGISTER: ", "SUCCESS"));
                         Log.d("Registration successfully.", user.toString());
                         isReg = true;
                     } else {
