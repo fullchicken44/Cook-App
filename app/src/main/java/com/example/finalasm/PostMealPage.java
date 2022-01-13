@@ -44,7 +44,8 @@ public class PostMealPage extends AppCompatActivity {
     private final String dbAPI = "https://s3777242androidfinal-default-rtdb.firebaseio.com/";
     DatabaseReference testuserDb = FirebaseDatabase.getInstance(dbAPI).getReference("testusers").child("users");
     DatabaseReference mealDb = FirebaseDatabase.getInstance(dbAPI).getReference("meal");
-
+    ImageButton backPost;
+    ImageButton imageAdd;
     private Uri imageUri;
     private static final  int IMAGE_REQUEST = 2;
 
@@ -54,7 +55,12 @@ public class PostMealPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_meal_page);
-        ImageButton imageAdd = findViewById(R.id.button_image_post_meal);
+        imageAdd = findViewById(R.id.button_image_post_meal);
+        backPost = findViewById(R.id.back_post_meal);
+        backPost.setOnClickListener(v ->{
+            finish();
+        });
+
         imageAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

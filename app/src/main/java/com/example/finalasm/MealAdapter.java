@@ -121,7 +121,6 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
             });
 
         }
-        //TODO
         if (!(firebaseUser == null)) {
             provider.fetchAllUser(userDb, userList -> {
                 for (int i = 0; i < userList.size(); i++) {
@@ -144,13 +143,13 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
                             userDb.child(key).setValue(currentUser).addOnSuccessListener(unused -> Log.d("UPDATE: ", "UPDATED USER COLLECTION"));
 
                     });
-
+                // TODO: Fix the deleting error
                 } else if (type == VERTICAL_REMOVE) {
                     holder.buttonRemove.setOnClickListener(v -> {
                         meal = mealList.get(position);
                         currentUser.getCollection().remove(position);
-                        userDb.child(key).setValue(currentUser).addOnSuccessListener(unused -> Log.d("DELETE: ", "DELETE " + meal.getStrMeal() + " FROM COLLECTION"));
-                        System.out.println("delete from save collection");
+                        userDb.child(key).setValue(currentUser).addOnSuccessListener(unused ->
+                                Log.d("DELETE: ", "DELETE " + meal.getStrMeal() + " FROM COLLECTION"));
                     });
 
                 } else if (type == HORIZONTAL_ADD) {
@@ -163,11 +162,10 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
                         meal = mealList.get(position);
                         currentUser.getCollection().add(String.valueOf(position));
                         Log.d("SUCCESS", "Added " + meal.getStrMeal() + " to your collection");
-                            userDb.child(key).setValue(currentUser).addOnSuccessListener(unused -> Log.d("UPDATE: ", "UPDATED USER COLLECTION"));
-
+                            userDb.child(key).setValue(currentUser).addOnSuccessListener(unused ->
+                                    Log.d("UPDATE: ", "UPDATED USER COLLECTION"));
                     });
                 }
-
             });
         }
     }
@@ -188,7 +186,6 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
     }
 
     public class DishViewHolder extends RecyclerView.ViewHolder {
-
         private ImageView imageDish;
         private TextView nameDish;
         private TextView nameCate;
@@ -198,7 +195,6 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
 
         public DishViewHolder(@NonNull View itemView) {
             super(itemView);
-
             if (type == CATEGORY) {
                 nameCate = itemView.findViewById(R.id.name_category_card);
             }
@@ -229,5 +225,15 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
             }
         }
         return filterList;
+    }
+
+    private List<Meal> getMealByCategory(List<Meal> mealList, String category) {
+        List<Meal> pickedMeal = new ArrayList<>();
+        for (Meal meal : mealList) {
+            if (meal.getStrCategory().equals(category)) {
+                pickedMeal.add(meal);
+            }
+        }
+        return pickedMeal;
     }
 }

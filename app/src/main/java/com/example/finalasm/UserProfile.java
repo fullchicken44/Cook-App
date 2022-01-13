@@ -79,6 +79,19 @@ public class UserProfile extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rcvCategory.setLayoutManager(linearLayoutManager);
 
+        name_user.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(UserProfile.this);
+            builder.setTitle("Do you want to log out?");
+            builder.setMessage("").setPositiveButton("Confirm",(dialog, which) -> {
+                firebaseAuth.signOut();
+                intent = new Intent(UserProfile.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }).setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.btn_star_big_on)
+                    .show();
+        });
+
         nav_menu.setOnClickListener(v -> {
             intent = new Intent(UserProfile.this, MainActivity.class);
             startActivity(intent);

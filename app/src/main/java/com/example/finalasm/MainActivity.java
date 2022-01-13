@@ -133,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
                 intent = new Intent(MainActivity.this, UserProfile.class);
             }
             startActivity(intent);
+            finish();
         });
 
         nav_search.setOnClickListener(v -> {
@@ -140,12 +141,6 @@ public class MainActivity extends AppCompatActivity {
             intent = new Intent(MainActivity.this, SearchActivity.class);
             startActivity(intent);
         });
-        firebaseAuth.signOut();
-    }
-
-    private int randomInt(int size) {
-        int min = 0;
-        return min;
     }
 
     public interface firebaseCallback {

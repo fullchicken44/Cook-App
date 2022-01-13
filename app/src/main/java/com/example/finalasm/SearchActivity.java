@@ -90,6 +90,7 @@ public class SearchActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         rcvCategory.setLayoutManager(linearLayoutManager);
         rcvCategory.setAdapter(cateAdapter);
+
             search_bar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
@@ -111,25 +112,14 @@ public class SearchActivity extends AppCompatActivity {
                     return true;
                 }
             });
-            search_bar.setOnCloseListener(new SearchView.OnCloseListener() {
-                @Override
-                public boolean onClose() {
-                    rcvCategory.setAdapter(cateAdapter);
-                    rcvCategory.setVisibility(View.VISIBLE);
-                    return false;
-                }
+            search_bar.setOnCloseListener(() -> {
+                rcvCategory.setAdapter(cateAdapter);
+                rcvCategory.setVisibility(View.VISIBLE);
+                return false;
             });
     }
 
-    private List<Meal> getMealByCategory(List<Meal> mealList, String category) {
-        List<Meal> pickedMeal = new ArrayList<>();
-        for (Meal meal : mealList) {
-            if (meal.getStrCategory().equals(category)) {
-                pickedMeal.add(meal);
-            }
-        }
-        return pickedMeal;
-    }
+
 
 
 }

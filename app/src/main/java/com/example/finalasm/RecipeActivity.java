@@ -9,35 +9,21 @@ import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.CountDownTimer;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-import com.example.finalasm.FirebaseDB;
-import com.example.finalasm.Meal;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 import com.squareup.picasso.Picasso;
 
-import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -51,7 +37,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -62,7 +47,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 public class RecipeActivity extends AppCompatActivity {
-    //private final String dbAPI = "https://android-2a378-default-rtdb.asia-southeast1.firebasedatabase.app/";
     private final String dbAPI = "https://s3777242androidfinal-default-rtdb.firebaseio.com/";
 
     DatabaseReference mealDb = FirebaseDatabase.getInstance(dbAPI).getReference("meal");
@@ -95,12 +79,16 @@ public class RecipeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         nameValue = (String) intent.getExtras().get("name");
 
-        btnTimer = (ImageButton) findViewById(R.id.btn_timer_recipe);
-        layoutTimer = (LinearLayout) findViewById(R.id.layout_timer_recipe);
-        txtTimer = (TextView) findViewById(R.id.txt_timer_recipe);
+        btnTimer = findViewById(R.id.btn_timer_recipe);
+        layoutTimer = findViewById(R.id.layout_timer_recipe);
+        txtTimer = findViewById(R.id.txt_timer_recipe);
         txtRate = findViewById(R.id.rate_num_recipe);
         txtRateCount = findViewById(R.id.vote_num_recipe);
+        ImageButton btnBack = findViewById(R.id.backButtonRecipe);
 
+        btnBack.setOnClickListener(view -> {
+            finish();
+        });
 
         // Meals
         firebaseHandler.fetchAllMeal(mealDb, mealList -> {
@@ -128,7 +116,7 @@ public class RecipeActivity extends AppCompatActivity {
             // Meal mealObj = mainMealList.get(Integer.parseInt(currentID));
 
             // Meal obj name
-            TextView mealObjName = (TextView) findViewById(R.id.name_recipe);
+            TextView mealObjName = findViewById(R.id.name_recipe);
             mealObjName.setText(mealObj.getStrMeal()); //name Dish5
 
             // Need all three function to make the test movable;
@@ -137,7 +125,7 @@ public class RecipeActivity extends AppCompatActivity {
             mealObjName.setSingleLine(true);
 
             // Meal obj instruction
-            TextView mealObjInstruction = (TextView) findViewById(R.id.text_instruction);
+            TextView mealObjInstruction = findViewById(R.id.text_instruction);
             mealObjInstruction.setText(mealObj.getStrInstructions());
             //mealObjInstruction.append(System.getProperty("line.separator"));
             mealObjInstruction.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START); //left
@@ -145,7 +133,8 @@ public class RecipeActivity extends AppCompatActivity {
 
 
             // Meal obj image
-            ImageView mealObjImage = (ImageView) findViewById(R.id.image_recipe);
+            //TODO: Get Image function from here
+            ImageView mealObjImage = findViewById(R.id.image_recipe);
             if (mealObj != null) {
                 Picasso.get()
                         .load(mealObj.getStrMealThumb())
@@ -227,19 +216,7 @@ public class RecipeActivity extends AppCompatActivity {
             });
 
 
-            ImageButton btnBack = (ImageButton) findViewById(R.id.backButtonRecipe);
-            btnBack.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.i(TAG, "Click on back button: ");
-                    Toast.makeText(getApplicationContext(),"Home Button",Toast.LENGTH_LONG).show();
-//                    Intent intent = new Intent(RecipeActivity.this, PostMealPage.class);
-//                    //Intent intent = new Intent(MainActivity.this, ActivityUserPage.class);
-//                    startActivity(intent);
-                    finish();
-                }
 
-            });
 
             /*
             Button timer view
