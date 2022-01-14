@@ -40,22 +40,27 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        email = (EditText) findViewById(R.id.userEmail);
-        password = (EditText) findViewById(R.id.userPassword);
-        loginBtn = (Button) findViewById(R.id.loginBtn);
-        sign_up = (TextView) findViewById(R.id.sign_up);
-        asGuest = (TextView) findViewById(R.id.asGuest);
+        email = findViewById(R.id.userEmail);
+        password = findViewById(R.id.userPassword);
+        loginBtn = findViewById(R.id.loginBtn);
+        sign_up = findViewById(R.id.sign_up);
+        asGuest = findViewById(R.id.asGuest);
 
         loginBtn.setOnClickListener(v -> {
+            //Pass the information from field to variables
             String inputEmail = email.getText().toString();
             String inputPassword = password.getText().toString();
+
+            //Login using firebase's function
             firebaseAuth.signInWithEmailAndPassword(inputEmail, inputPassword)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
+
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             assert user != null;
+                            //Navigate back to Main page
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();
@@ -68,12 +73,18 @@ public class LoginActivity extends AppCompatActivity {
                     });
         });
 
+        //If user is new, show option for sign up
         sign_up.setOnClickListener(v -> {
             Intent intent1 = new Intent(this, SignupActivity.class);
             startActivity(intent1);
         });
 
-        asGuest.setOnClickListener(v -> finish());
+        //View the app as guest
+        asGuest.setOnClickListener(v -> {
+            Intent intent1 = new Intent(this, MainActivity.class);
+            startActivity(intent1);
+            finish();
+        });
 
     }
 

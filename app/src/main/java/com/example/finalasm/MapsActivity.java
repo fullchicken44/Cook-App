@@ -8,12 +8,13 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.location.Location;
+import android.util.Log;
 
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -55,10 +56,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(getCurrentLocation().getPosition()));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(getCurrentLocation().getPosition()));
+        getCurrentLocation();
     }
 
-    private Marker getCurrentLocation() {
+    private void getCurrentLocation() {
         LocationRequest mLocationRequest = LocationRequest.create();
         mLocationRequest.setInterval(10000);
         mLocationRequest.setFastestInterval(5000);
@@ -67,6 +69,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 if (locationResult == null) {
+                    Log.d("LOCATION RESULT", " NULL");
                     return;
                 }
                 for (Location location : locationResult.getLocations()) {
@@ -89,6 +92,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             LocationServices.getFusedLocationProviderClient(MapsActivity.this)
                     .requestLocationUpdates(mLocationRequest, mLocationCallback, null);
         }
-        return currentMarker[1];
     }
 }

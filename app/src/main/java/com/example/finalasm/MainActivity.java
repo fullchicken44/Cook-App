@@ -85,39 +85,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Declaration
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
         rcvCategory = findViewById(R.id.recycler_main);
-
-        provider.fetchAllUser(userDb,userList -> {
-            for (int i = 0; i < userList.size(); i++) {
-                user = (User) userList.get(i);
-                mainUserList.add(user);
-            }
-            if (firebaseUser == null) {
-                mealAdapter = new MealAdapter(this, MealAdapter.HORIZONTAL);
-                username.setText("Guest");
-            } else {
-                for (User user : mainUserList) {
-                    if (firebaseUser.getEmail().equals(user.getUserEmail())) {
-                        mealAdapter = new MealAdapter(this, MealAdapter.HORIZONTAL_ADD);
-                        username.setText(user.getUserName());
-                    }
-                }
-            }
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
-            rcvCategory.setLayoutManager(gridLayoutManager);
-            rcvCategory.setAdapter(mealAdapter);
-
-            provider.fetchAllMeal(mealDb, mealList -> {
-                for (int i = 0; i < mealList.size(); i++) {
-                    meal = (Meal) mealList.get(i);
-                    mainMealList.add(meal);
-                }
-                mealAdapter.setData(this,mainMealList,new ArrayList<>());
-            });
-        });
-
         userAvatar = findViewById(R.id.avatar);
         username = findViewById(R.id.username);
         searchFood = findViewById(R.id.search_food);
@@ -125,8 +97,47 @@ public class MainActivity extends AppCompatActivity {
         nav_search = findViewById(R.id.nav_search);
         nav_user = findViewById(R.id.nav_user);
 
+        //Get all users
+        provider.fetchAllUser(userDb,userList -> {
+            for (int i = 0; i < userList.size(); i++) {
+                user = (User) userList.get(i);
+                mainUserList.add(user);
+            }
+            //If current user is not logged in then view as guest
+            if (firebaseUser == null) {
+                mealAdapter = new MealAdapter(this, MealAdapter.HORIZONTAL);
+                username.setText("Guest");
+            } else {
+                //If logged in then loop through user list to find current user
+                for (User user : mainUserList) {
+                    if (firebaseUser.getEmail().equals(user.getUserEmail())) {
+                        mealAdapter = new MealAdapter(this, MealAdapter.HORIZONTAL_ADD);
+                        username.setText(user.getUserName());
+                        break;
+                    }
+                }
+            }
+
+            //Created layout for adapter
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+            rcvCategory.setLayoutManager(gridLayoutManager);
+            rcvCategory.setAdapter(mealAdapter);
+
+            //Get all meal
+            provider.fetchAllMeal(mealDb, mealList -> {
+                for (int i = 0; i < mealList.size(); i++) {
+                    meal = (Meal) mealList.get(i);
+                    mainMealList.add(meal);
+                }
+                //Put meal to adapter
+                mealAdapter.setData(this,mainMealList,new ArrayList<>());
+            });
+        });
+
+        //Navigation to user profile
         nav_user.setOnClickListener(v -> {
             Intent intent;
+            //If user is not logged in then direct to Login page
             if (firebaseUser == null) {
                 intent = new Intent(MainActivity.this, LoginActivity.class);
             } else {
@@ -136,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
             finish();
         });
 
+        //Navigation to search page
         nav_search.setOnClickListener(v -> {
             Intent intent;
             intent = new Intent(MainActivity.this, SearchActivity.class);
@@ -143,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //Abstraction
     public interface firebaseCallback {
         void call(List list);
     }

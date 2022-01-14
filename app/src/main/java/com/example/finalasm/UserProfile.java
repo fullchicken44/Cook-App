@@ -129,7 +129,9 @@ public class UserProfile extends AppCompatActivity {
                     meal = (Meal) mealList.get(i);
                     mainMealList.add(meal);
                     for (int j = 0; j < currentUser.getCollection().size(); j++) {
-                        if (!currentUser.getCollection().get(j).isEmpty() && Long.parseLong(currentUser.getCollection().get(j)) == i) {
+                        if (!currentUser.getCollection().get(j).isEmpty()
+                                && !savedMeal.contains(meal)
+                                && Long.parseLong(currentUser.getCollection().get(j)) == i) {
                             savedMeal.add(mainMealList.get(i));
                         }
                     }
@@ -225,5 +227,12 @@ public class UserProfile extends AppCompatActivity {
         ContentResolver contentResolver = getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return  mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+    }
+
+    @Override
+    public void onBackPressed() {
+        intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

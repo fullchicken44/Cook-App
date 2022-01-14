@@ -3,6 +3,7 @@ package com.example.finalasm;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -37,15 +38,14 @@ public class PostMealPage extends AppCompatActivity {
     FirebaseDB firebaseHandler = new FirebaseDB();
     List<User> mainUserList = new ArrayList<User>();
     User user;
-    Meal meal = new Meal();
+    Meal meal;
     private EditText thumbUrl;
     String dishNameStr;
     //private final String dbAPI = "https://android-2a378-default-rtdb.asia-southeast1.firebasedatabase.app/";
-    private final String dbAPI = "https://s3777242androidfinal-default-rtdb.firebaseio.com/";
-    DatabaseReference testuserDb = FirebaseDatabase.getInstance(dbAPI).getReference("testusers").child("users");
+    private final String dbAPI = "https://finalandroid-e100e-default-rtdb.asia-southeast1.firebasedatabase.app/";
     DatabaseReference mealDb = FirebaseDatabase.getInstance(dbAPI).getReference("meal");
-    ImageButton backPost;
-    ImageButton imageAdd;
+    ImageButton backPost, imageAdd;
+    AppCompatButton finish_btn;
     private Uri imageUri;
     private static final  int IMAGE_REQUEST = 2;
 
@@ -57,19 +57,17 @@ public class PostMealPage extends AppCompatActivity {
         setContentView(R.layout.activity_post_meal_page);
         imageAdd = findViewById(R.id.button_image_post_meal);
         backPost = findViewById(R.id.back_post_meal);
-        backPost.setOnClickListener(v ->{
-            finish();
-        });
+        finish_btn = findViewById(R.id.button_finish_post_meal);
 
-        imageAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openImage();
-            }
-        });
+        backPost.setOnClickListener(v -> finish());
+
+        imageAdd.setOnClickListener(v -> openImage());
 
         firebaseHandler.fetchAllMeal(mealDb, mealList -> {
-
+            int newSlot = mealList.size() ;
+            finish_btn.setOnClickListener(v -> {
+                onClickPushData(newSlot);
+            });
         });
     }
 
@@ -77,17 +75,15 @@ public class PostMealPage extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setType("image/");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent , IMAGE_REQUEST);
+        startActivityForResult(intent, IMAGE_REQUEST);
 
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == IMAGE_REQUEST && resultCode == RESULT_OK){
             imageUri = data.getData();
-
             uploadImage();
         }
     }
@@ -101,7 +97,7 @@ public class PostMealPage extends AppCompatActivity {
     }
 
     private void uploadImage() {
-
+        meal = new Meal();
         final ProgressDialog pd = new ProgressDialog(this);
         pd.setMessage("Uploading");
         pd.show();
@@ -132,7 +128,8 @@ public class PostMealPage extends AppCompatActivity {
     }
 
     // Post on meal unofficial
-    private void onClickPushData() {
+    private void onClickPushData(int position) {
+        meal = new Meal();
         DatabaseReference mealUnofficial = FirebaseDatabase.getInstance(dbAPI).getReference("mealunofficial");
         TextView mealName = findViewById(R.id.input_name_post_meal);
         meal.setStrMeal(mealName.getText().toString());
@@ -163,7 +160,7 @@ public class PostMealPage extends AppCompatActivity {
         String stringMeasure = strMeasurePost.getText().toString();
         measureHandler(stringMeasure);
 
-        mealDb.setValue(meal);
+        mealDb.child(String.valueOf(position)).setValue(meal);
 
         //Meal meal = new Meal("123456", "Area51", "A", "Name", "B");
     }
@@ -174,7 +171,7 @@ public class PostMealPage extends AppCompatActivity {
         for (int i = 0; i < arrOfStr.length; i++) {
             ingredientList.add(arrOfStr[i]);
         }
-        for (int i = arrOfStr.length; i < 19; i++) {
+        for (int i = arrOfStr.length; i < 20; i++) {
             ingredientList.add(null);
         }
 
@@ -198,7 +195,6 @@ public class PostMealPage extends AppCompatActivity {
         meal.setStrIngredient18(ingredientList.get(17));
         meal.setStrIngredient19(ingredientList.get(18));
         meal.setStrIngredient20(ingredientList.get(19));
-
     }
 
     public void measureHandler(String str) {
@@ -207,7 +203,7 @@ public class PostMealPage extends AppCompatActivity {
         for (int i = 0; i < arrOfStr.length; i++) {
             measureList.add(arrOfStr[i]);
         }
-        for (int i = arrOfStr.length; i < 19; i++) {
+        for (int i = arrOfStr.length; i < 20; i++) {
             measureList.add(null);
         }
 

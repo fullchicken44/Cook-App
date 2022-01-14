@@ -33,6 +33,7 @@ import java.util.regex.Pattern;
 
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -47,7 +48,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 public class RecipeActivity extends AppCompatActivity {
-    private final String dbAPI = "https://s3777242androidfinal-default-rtdb.firebaseio.com/";
+    private final String dbAPI = "https://finalandroid-e100e-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
     DatabaseReference mealDb = FirebaseDatabase.getInstance(dbAPI).getReference("meal");
     DatabaseReference userDb = FirebaseDatabase.getInstance(dbAPI).getReference("user").child("users");
@@ -61,6 +62,7 @@ public class RecipeActivity extends AppCompatActivity {
     int currentVote;
     int hourTimer;
     int minuteTimer;
+    Intent intent;
     ImageButton btnTimer;
     LinearLayout layoutTimer;
     TextView txtTimer;
@@ -76,7 +78,7 @@ public class RecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
 
-        Intent intent = getIntent();
+        intent = getIntent();
         nameValue = (String) intent.getExtras().get("name");
 
         btnTimer = findViewById(R.id.btn_timer_recipe);
@@ -85,9 +87,18 @@ public class RecipeActivity extends AppCompatActivity {
         txtRate = findViewById(R.id.rate_num_recipe);
         txtRateCount = findViewById(R.id.vote_num_recipe);
         ImageButton btnBack = findViewById(R.id.backButtonRecipe);
+        ImageButton rate = findViewById(R.id.ratingBarRecipe);
+        ImageButton btnSave = findViewById(R.id.btn_save_recipe);
+        ImageButton btnMap = findViewById(R.id.btn_map_recipe);
+        ImageButton btnPlay = findViewById(R.id.btn_play_recipe);
+        listIngre = findViewById(R.id.list_ingredient_recipe);
+        ImageView mealObjImage = findViewById(R.id.image_recipe);
 
-        btnBack.setOnClickListener(view -> {
-            finish();
+        btnBack.setOnClickListener(view -> finish());
+
+        btnMap.setOnClickListener(v -> {
+            intent = new Intent(RecipeActivity.this, MapsActivity.class);
+            startActivity(intent);
         });
 
         // Meals
@@ -103,13 +114,7 @@ public class RecipeActivity extends AppCompatActivity {
                     mealObj = mainMealList.get(i);
                 }
             }
-
             Log.d("TAG", "Index cua meal la " + mealObj.toString());
-
-            ImageButton rate = (ImageButton) findViewById(R.id.ratingBarRecipe);
-            ImageButton btnSave = (ImageButton) findViewById(R.id.btn_save_recipe);
-            ImageButton btnMap = (ImageButton) findViewById(R.id.btn_map_recipe);
-            ImageButton btnPlay = (ImageButton) findViewById(R.id.btn_play_recipe);
 
             // Current meal position
             // Get one meal object
@@ -127,14 +132,12 @@ public class RecipeActivity extends AppCompatActivity {
             // Meal obj instruction
             TextView mealObjInstruction = findViewById(R.id.text_instruction);
             mealObjInstruction.setText(mealObj.getStrInstructions());
+
             //mealObjInstruction.append(System.getProperty("line.separator"));
             mealObjInstruction.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START); //left
             mealObjInstruction.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15.f);
 
-
             // Meal obj image
-            //TODO: Get Image function from here
-            ImageView mealObjImage = findViewById(R.id.image_recipe);
             if (mealObj != null) {
                 Picasso.get()
                         .load(mealObj.getStrMealThumb())
@@ -144,26 +147,21 @@ public class RecipeActivity extends AppCompatActivity {
             }
 
             Meal finalMealObj = mealObj;
-            mealObjImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d("Hello","The function OnClick is called");
-                    AlertDialog alert = new AlertDialog.Builder(RecipeActivity.this).create();
-                    // alert.setView(mealObjImage);, causing crash, fix later
-                    alert.setTitle(finalMealObj.getStrMeal());
-                    alert.setMessage("AREA: " + finalMealObj.getStrArea()+ "\n\n" +
-                            "CATEGORIES: " + finalMealObj.getStrCategory() + "\n\n" +
-                            "TAGS: " + finalMealObj.getStrTags());
-                    alert.show();
-                }
+            mealObjImage.setOnClickListener(v -> {
+                Log.d("Hello","The function OnClick is called");
+                AlertDialog alert = new AlertDialog.Builder(RecipeActivity.this).create();
+                // alert.setView(mealObjImage);, causing crash, fix later
+                alert.setTitle(finalMealObj.getStrMeal());
+                alert.setMessage("AREA: " + finalMealObj.getStrArea()+ "\n\n" +
+                        "CATEGORIES: " + finalMealObj.getStrCategory() + "\n\n" +
+                        "TAGS: " + finalMealObj.getStrTags());
+                alert.show();
             });
-
 
             /*
             Ingredients view
              */
 
-            listIngre = (ListView) findViewById(R.id.list_ingredient_recipe);
             listIngredient = new ArrayList<>();
             listIngredient.add(mealObj.getStrIngredient1()+"\t"+mealObj.getStrMeasure1());
             listIngredient.add(mealObj.getStrIngredient2()+"\t"+mealObj.getStrMeasure2());
@@ -188,7 +186,7 @@ public class RecipeActivity extends AppCompatActivity {
             System.out.println("//"+listIngredient.get(18)+"//");
             List<String> listTemp = new ArrayList<>();
 
-            // TO DO lien lac Billie for info
+            // TODO lien lac Billie for info
             for (int i = 0; i < listIngredient.size(); i++){
                 if (listIngredient.get(i).equals("\t ")){
                     continue;
@@ -215,9 +213,6 @@ public class RecipeActivity extends AppCompatActivity {
                 }
             });
 
-
-
-
             /*
             Button timer view
              */
@@ -236,61 +231,67 @@ public class RecipeActivity extends AppCompatActivity {
             txtRateCount.setText(currentVote+" "+"vote(s)");
 
             // Set rate on Click for user to click in
-            rate.setOnClickListener(new View.OnClickListener() {
-                @SuppressLint("SetTextI18n")
-                @RequiresApi(api = Build.VERSION_CODES.Q)
-                @Override
-                public void onClick(View v) {
-                    final AlertDialog.Builder builder = new AlertDialog.Builder(RecipeActivity.this);
-                    builder.create();
-                    final TextView rated = new TextView (RecipeActivity.this);
-                    final TextView voteNum = new TextView (RecipeActivity.this);
-                    final RatingBar ratingBar = new RatingBar(RecipeActivity.this);
-                    Integer intRatingbar = Math.toIntExact((Math.round(meal.getRating() * 100.0 / 100.0)));
+            rate.setOnClickListener(v -> {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(RecipeActivity.this);
+                builder.create();
+                final TextView rated = new TextView (RecipeActivity.this);
+                final TextView voteNum = new TextView (RecipeActivity.this);
+                final RatingBar ratingBar = new RatingBar(RecipeActivity.this);
+                Integer intRatingbar = Math.toIntExact((Math.round(meal.getRating() * 100.0 / 100.0)));
 
-                    ratingBar.setMax(5); // Round the star to the current
-                    rated.setText("Rate: " + (currentRating * 100.00) / 100.00);
-                    Log.i("TAG", "Current rating: " + currentRating );
+                ratingBar.setMax(5); // Round the star to the current
 
-                    voteNum.setText("Number of Votes: " + currentVote);
-                    LinearLayout layout = new LinearLayout(RecipeActivity.this);
+                rated.setText("Rate: " + (currentRating * 100.00) / 100.00);
+                Log.i("TAG", "Current rating: " + currentRating );
 
-                    // Add layout
-                    layout.setOrientation(LinearLayout.VERTICAL);
-                    layout.addView(rated);
-                    layout.addView(voteNum);
-                    layout.addView(ratingBar);
-                    layout.setPadding(100,100,   100,10);
-                    builder.setView(layout);
-                    //TO DO
-                    // Set user onClick to edit current rating
-                    builder.setTitle("RATE THIS RECIPE")
-                            .setPositiveButton("SUBMIT", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // Get user rating
-                                    ratingBar.getRating();
+                voteNum.setText("Number of Votes: " + currentVote);
+                LinearLayout layout = new LinearLayout(RecipeActivity.this);
+                LinearLayout starLayout = new LinearLayout(RecipeActivity.this);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                starLayout.setLayoutParams(layoutParams);
+                starLayout.addView(ratingBar);
 
-                                    // Set new vote since the number of people rate increase
-                                    currentVote = currentVote + 1;
+                // Add layout
+                layout.setOrientation(LinearLayout.VERTICAL);
+                layout.addView(rated);
+                layout.addView(voteNum);
+                layout.addView(starLayout);
+                layout.setPadding(100,100,   100,10);
+                builder.setView(layout);
 
-                                    // Set new vote for meal
-                                    meal.setVote(currentVote);
+                //TODO
+                // Set user onClick to edit current rating
+                builder.setTitle("RATE THIS RECIPE")
+                        .setPositiveButton("SUBMIT", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Get user rating
+                                ratingBar.getRating();
 
-                                    // New rating = (oldRate * N0 of vote+ newRate) / (N0 of vote +1)
-                                    currentRating = (currentRating * meal.getVote() + ratingBar.getRating()) / (currentVote);
-                                    currentRating = round(currentRating,1);
+                                // Set new vote since the number of people rate increase
+                                currentVote = currentVote + 1;
 
-                                    // Set the new rating to the meal db
-                                    meal.setRating(currentRating);
+                                // New rating = (oldRate * N0 of vote+ newRate) / (N0 of vote +1)
+                                currentRating = ((meal.getRating() * meal.getVote()) + ratingBar.getRating()) / (currentVote);
+                                currentRating = round(currentRating,1);
 
-                                    txtRate.setText(currentRating.toString());
-                                    txtRateCount.setText(currentVote+" "+"vote(s)");
+                                // Set new vote for meal
+                                meal.setVote(currentVote);
+                                // Set the new rating to the meal db
+                                meal.setRating(currentRating);
+
+                                txtRate.setText(currentRating.toString());
+                                txtRateCount.setText(currentVote+" "+"vote(s)");
+
+                                for (int i = 0; i < mealList.size(); i++) {
+                                    if (mealList.get(i).equals(meal)) {
+                                        mealDb.child(String.valueOf(i)).setValue(meal);
+                                    }
                                 }
-                            })
-                            .setNegativeButton(android.R.string.cancel, null).show();
-                }
-
+                            }
+                        })
+                        .setNegativeButton(android.R.string.cancel, null).show();
             });
 
             /*
@@ -328,11 +329,8 @@ public class RecipeActivity extends AppCompatActivity {
                 layout.addView(youTubePlayerView);
                 builder.setView(layout);
                 builder.setNegativeButton(android.R.string.ok, null).show();
-
             });
-
         });
-
     }
 
     public void timePicker(){

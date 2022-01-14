@@ -32,7 +32,7 @@ public class SearchActivity extends AppCompatActivity {
     FirebaseDB provider = new FirebaseDB();
     Meal meal;
     List<Meal> mainMealList = new ArrayList<Meal>();
-    ImageButton nav_menu,nav_search,nav_user;
+    ImageButton nav_menu, nav_search, nav_user;
     SearchView search_bar;
     RecyclerView rcvCategory;
     MealAdapter mealAdapter;
@@ -50,20 +50,23 @@ public class SearchActivity extends AppCompatActivity {
         firebaseUser = firebaseAuth.getCurrentUser();
         nav_menu = findViewById(R.id.nav_menu);
         nav_user = findViewById(R.id.nav_user);
+        rcvMeal = findViewById(R.id.recycler_search);
 
+        //Navigation to the main menu
         nav_menu.setOnClickListener(v -> {
             intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
         });
 
-        nav_user.setOnClickListener(v-> {
+        //Navigation to the user page
+        nav_user.setOnClickListener(v -> {
             intent = new Intent(this, UserProfile.class);
             startActivity(intent);
             finish();
         });
 
-        // Meals
+        // Get all meals
         provider.fetchAllMeal(mealDb, mealList -> {
             for (int i = 0; i < mealList.size(); i++) {
                 meal = (Meal) mealList.get(i);
@@ -72,6 +75,7 @@ public class SearchActivity extends AppCompatActivity {
                     cateList.add(meal.getStrCategory());
                 }
             }
+            //Set data to adapter
             Log.d("CATEGORIES", cateList.toString());
             cateAdapter.setData(this, mainMealList, cateList);
             mealAdapter.setData(this, mainMealList, cateList);
@@ -79,7 +83,6 @@ public class SearchActivity extends AppCompatActivity {
 
         //Meal list displayed by grid
         mealAdapter = new MealAdapter(this, MealAdapter.HORIZONTAL);
-        rcvMeal = findViewById(R.id.recycler_search);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         rcvMeal.setLayoutManager(gridLayoutManager);
         rcvMeal.setAdapter(mealAdapter);
@@ -91,35 +94,34 @@ public class SearchActivity extends AppCompatActivity {
         rcvCategory.setLayoutManager(linearLayoutManager);
         rcvCategory.setAdapter(cateAdapter);
 
-            search_bar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    rcvCategory.setVisibility(View.GONE);
-                    List<Meal> filterlist = mealAdapter.filter(query,mainMealList);
-                    mealAdapter.setFilterData(SearchActivity.this,filterlist);
-                    rcvCategory.setAdapter(mealAdapter);
-                    return true;
+        //Search function
+        search_bar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                rcvCategory.setVisibility(View.GONE);
+                List<Meal> filterlist = mealAdapter.filter(query, mainMealList);
+                mealAdapter.setFilterData(SearchActivity.this, filterlist);
+                rcvCategory.setAdapter(mealAdapter);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                rcvCategory.setVisibility(View.GONE);
+                if (newText.isEmpty()) {
+                    mealAdapter.setFilterData(SearchActivity.this, mainMealList);
                 }
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    rcvCategory.setVisibility(View.GONE);
-                    if (newText.isEmpty()) {
-                        mealAdapter.setFilterData(SearchActivity.this, mainMealList);
-                    }
-                    List<Meal> filtering = mealAdapter.filter(newText,mainMealList);
-                    mealAdapter.setFilterData(SearchActivity.this,filtering);
-                    rcvCategory.setAdapter(mealAdapter);
-                    return true;
-                }
-            });
-            search_bar.setOnCloseListener(() -> {
-                rcvCategory.setAdapter(cateAdapter);
-                rcvCategory.setVisibility(View.VISIBLE);
-                return false;
-            });
+                List<Meal> filtering = mealAdapter.filter(newText, mainMealList);
+                mealAdapter.setFilterData(SearchActivity.this, filtering);
+                rcvCategory.setAdapter(mealAdapter);
+                return true;
+            }
+        });
+        //After close then search view dismiss
+        search_bar.setOnCloseListener(() -> {
+            rcvCategory.setAdapter(cateAdapter);
+            rcvCategory.setVisibility(View.VISIBLE);
+            return false;
+        });
     }
-
-
-
-
 }
