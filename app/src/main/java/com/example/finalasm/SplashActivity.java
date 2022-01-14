@@ -16,7 +16,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
 
-        lottieAnimationView = (LottieAnimationView) findViewById(R.id.lottie);
+        lottieAnimationView = findViewById(R.id.lottie);
 
 
         Thread thread = new Thread() {

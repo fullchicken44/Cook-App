@@ -20,6 +20,7 @@
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/drawable/round_square_corner.xml" value="0.24166666666666667" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/drawable/round_square_transparent.xml" value="0.177734375" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/drawable/round_top_corner.xml" value="0.177734375" />
+        <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/drawable/roundbutton.xml" value="0.18046875" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/drawable/search_bar.xml" value="0.24166666666666667" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/font/baemin_font.xml" value="0.31015625" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/font/roboto_medium.xml" value="0.31015625" />
@@ -28,16 +29,19 @@
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/layout/activity_main.xml" value="0.21" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/layout/activity_maps.xml" value="0.165625" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/layout/activity_post_meal_page.xml" value="0.165625" />
-        <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/layout/activity_recipe.xml" value="0.165625" />
+        <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/layout/activity_recipe.xml" value="0.33" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/layout/activity_search.xml" value="0.165625" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/layout/activity_signup.xml" value="0.22" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/layout/activity_user_profile.xml" value="0.22" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/layout/dish_category.xml" value="0.165625" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/layout/fragment_category_card.xml" value="0.165625" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/layout/fragment_dish_card.xml" value="0.33" />
+        <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/layout/fragment_dish_card_add.xml" value="0.168359375" />
+        <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/layout/fragment_dish_card_horizontal.xml" value="0.168359375" />
+        <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/layout/fragment_dish_card_horizontal_add.xml" value="0.168359375" />
+        <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/layout/fragment_dish_card_remove.xml" value="0.168359375" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/layout/menu_with_scroll.xml" value="0.18" />
         <entry key="..\:/Users/phongchan99/AndroidStudioProjects/FinalAsm/app/src/main/res/layout/splash_screen.xml" value="0.155078125" />
-        <entry key="app/src/main/res/layout/activity_recipe.xml" value="0.5437710437710438" />
       </map>
     </option>
   </component>

@@ -1,6 +1,5 @@
 package com.example.finalasm;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,16 +18,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -130,8 +124,8 @@ public class UserProfile extends AppCompatActivity {
                     mainMealList.add(meal);
                     for (int j = 0; j < currentUser.getCollection().size(); j++) {
                         if (!currentUser.getCollection().get(j).isEmpty()
-                                && !savedMeal.contains(meal)
-                                && Long.parseLong(currentUser.getCollection().get(j)) == i) {
+                                && Long.parseLong(currentUser.getCollection().get(j)) == i
+                                && !savedMeal.contains(meal)){
                             savedMeal.add(mainMealList.get(i));
                         }
                     }

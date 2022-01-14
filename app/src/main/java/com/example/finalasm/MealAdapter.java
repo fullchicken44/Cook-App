@@ -138,6 +138,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
                         currentUser.getCollection().remove(position);
                         userDb.child(key).setValue(currentUser);
                         List<Meal> tempList = delete(mealList, position);
+//                        List<Meal> tempList = new ArrayList<>();
                         setData(context, tempList, cateList);
                     });
 

@@ -8,8 +8,8 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.location.Location;
 import android.util.Log;
+import android.widget.ImageButton;
 
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -29,6 +29,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
     final Marker[] currentMarker = new Marker[2];
+    ImageButton currentLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +56,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        currentLocation = findViewById(R.id.currentLocation);
 
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(getCurrentLocation().getPosition()));
         getCurrentLocation();
+//        currentLocation.setOnClickListener(v -> mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(getCurrentLocation().getPosition(), 14)));
+
     }
 
-    private void getCurrentLocation() {
+    private Marker getCurrentLocation() {
         LocationRequest mLocationRequest = LocationRequest.create();
         mLocationRequest.setInterval(10000);
         mLocationRequest.setFastestInterval(5000);
@@ -83,6 +87,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 .title("Current location")
                                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.location)));
                         currentMarker[0] = currentMarker[1];
+                    } else {
+                        Log.d("ERROR WITH Location", location.toString());
                     }
                 }
             }
@@ -92,5 +98,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             LocationServices.getFusedLocationProviderClient(MapsActivity.this)
                     .requestLocationUpdates(mLocationRequest, mLocationCallback, null);
         }
+        return currentMarker[1];
     }
 }
