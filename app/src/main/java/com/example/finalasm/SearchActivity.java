@@ -1,17 +1,26 @@
 package com.example.finalasm;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,6 +41,7 @@ public class SearchActivity extends AppCompatActivity {
     FirebaseDB provider = new FirebaseDB();
     Meal meal;
     List<Meal> mainMealList = new ArrayList<Meal>();
+    List<Meal> secondMealList = new ArrayList<>();
     ImageButton nav_menu, nav_search, nav_user;
     SearchView search_bar;
     RecyclerView rcvCategory;
@@ -40,7 +50,7 @@ public class SearchActivity extends AppCompatActivity {
     RecyclerView rcvMeal;
     Intent intent;
     List<String> cateList = new ArrayList<>();
-
+    String categoryName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +61,7 @@ public class SearchActivity extends AppCompatActivity {
         nav_menu = findViewById(R.id.nav_menu);
         nav_user = findViewById(R.id.nav_user);
         rcvMeal = findViewById(R.id.recycler_search);
+
 
         //Navigation to the main menu
         nav_menu.setOnClickListener(v -> {
@@ -71,28 +82,33 @@ public class SearchActivity extends AppCompatActivity {
             for (int i = 0; i < mealList.size(); i++) {
                 meal = (Meal) mealList.get(i);
                 mainMealList.add(meal);
+                secondMealList.add(meal);
                 if (!cateList.contains(meal.getStrCategory())) {
                     cateList.add(meal.getStrCategory());
                 }
             }
             //Set data to adapter
             Log.d("CATEGORIES", cateList.toString());
-            cateAdapter.setData(this, mainMealList, cateList);
+            cateAdapter.setData(this, secondMealList, cateList);
             mealAdapter.setData(this, mainMealList, cateList);
         });
 
         //Meal list displayed by grid
-        mealAdapter = new MealAdapter(this, MealAdapter.HORIZONTAL);
+        mealAdapter = new MealAdapter(this, "SearchActivity", MealAdapter.HORIZONTAL);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         rcvMeal.setLayoutManager(gridLayoutManager);
         rcvMeal.setAdapter(mealAdapter);
 
         //Category list displayed by horizontal
-        cateAdapter = new MealAdapter(this, MealAdapter.CATEGORY);
+        cateAdapter = new MealAdapter(this, "SearchActivity", MealAdapter.CATEGORY);
         rcvCategory = findViewById(R.id.recycler_cate_search);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         rcvCategory.setLayoutManager(linearLayoutManager);
         rcvCategory.setAdapter(cateAdapter);
+        rcvMeal.setAdapter(mealAdapter);
+
+
+//        List<Meal> cateFilter = mealAdapter.getMealByCategory(mainMealList,);
 
         //Search function
         search_bar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -124,4 +140,11 @@ public class SearchActivity extends AppCompatActivity {
             return false;
         });
     }
+
+//    @Override
+//    public void onBackPressed() {
+//        intent = new Intent(this, MainActivity.class);
+//        startActivity(intent);
+//        finish();
+//    }
 }

@@ -19,10 +19,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     private List<Category> listCategory;
     int type;
 
-    public CategoryAdapter(int type, Context context) {
+    public CategoryAdapter(Context context, int type) {
         this.context = context;
         this.type = type;
     }
+
+
 
     public void setData(List<Category> list) {
         this.listCategory = list;
@@ -49,15 +51,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         holder.nameCategory.setText(category.getNameCategory());
         MealAdapter mealAdapter = null;
         if (type == MealAdapter.VERTICAL) {
-            mealAdapter = new MealAdapter(context,MealAdapter.VERTICAL);
+            mealAdapter = new MealAdapter(context, "UserProfile", MealAdapter.VERTICAL);
         }else if (type == MealAdapter.HORIZONTAL) {
-            mealAdapter = new MealAdapter(context,MealAdapter.HORIZONTAL);
+            mealAdapter = new MealAdapter(context, "UserProfile", MealAdapter.HORIZONTAL);
         }
         else if (type == MealAdapter.VERTICAL_ADD) {
-            mealAdapter = new MealAdapter(context,MealAdapter.VERTICAL_ADD);
+            mealAdapter = new MealAdapter(context, "UserProfile", MealAdapter.VERTICAL_ADD);
         }
         else if (type == MealAdapter.VERTICAL_REMOVE) {
-            mealAdapter = new MealAdapter(context,MealAdapter.VERTICAL_REMOVE);
+            mealAdapter = new MealAdapter(context, "UserProfile", MealAdapter.VERTICAL_REMOVE);
         }
         mealAdapter.setData(context, category.getMealList(), new ArrayList<String>());
 

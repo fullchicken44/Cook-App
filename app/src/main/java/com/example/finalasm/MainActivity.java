@@ -57,12 +57,12 @@ public class MainActivity extends AppCompatActivity {
                 mainUserList.add(user);
             }
             if (firebaseUser == null) {
-                mealAdapter = new MealAdapter(this, MealAdapter.HORIZONTAL);
+                mealAdapter = new MealAdapter(this, "MainActivity",MealAdapter.HORIZONTAL_ADD);
                 username.setText("Guest");
             } else {
                 for (User user : mainUserList) {
                     if (firebaseUser.getEmail().equals(user.getUserEmail())) {
-                        mealAdapter = new MealAdapter(this, MealAdapter.HORIZONTAL_ADD);
+                        mealAdapter = new MealAdapter(this, "MainActivity", MealAdapter.HORIZONTAL_ADD);
                         username.setText(user.getUserName());
                     }
                 }
@@ -105,13 +105,13 @@ public class MainActivity extends AppCompatActivity {
             }
             //If current user is not logged in then view as guest
             if (firebaseUser == null) {
-                mealAdapter = new MealAdapter(this, MealAdapter.HORIZONTAL);
+                mealAdapter = new MealAdapter(this, "MainActivity",MealAdapter.HORIZONTAL);
                 username.setText("Guest");
             } else {
                 //If logged in then loop through user list to find current user
                 for (User user : mainUserList) {
                     if (firebaseUser.getEmail().equals(user.getUserEmail())) {
-                        mealAdapter = new MealAdapter(this, MealAdapter.HORIZONTAL_ADD);
+                        mealAdapter = new MealAdapter(this, "MainActivity",MealAdapter.HORIZONTAL_ADD);
                         username.setText(user.getUserName());
                         break;
                     }
@@ -143,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 intent = new Intent(MainActivity.this, UserProfile.class);
             }
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivity(intent);
             finish();
         });
@@ -151,7 +152,9 @@ public class MainActivity extends AppCompatActivity {
         nav_search.setOnClickListener(v -> {
             Intent intent;
             intent = new Intent(MainActivity.this, SearchActivity.class);
+//            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivity(intent);
+            finish();
         });
     }
 

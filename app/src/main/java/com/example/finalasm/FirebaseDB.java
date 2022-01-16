@@ -51,6 +51,9 @@ public class FirebaseDB {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot mealSnapshot: snapshot.getChildren()) {
                     meal = mealSnapshot.getValue(Meal.class);
+                    if (mealList.contains(meal)) {
+                        continue;
+                    } else
                     mealList.add(meal);
                 }
                 callback.call(mealList);;
@@ -66,6 +69,8 @@ public class FirebaseDB {
     // Fetch all user
     public void fetchAllUser(DatabaseReference userDb, MainActivity.firebaseCallback callback) {
         List<User> userList = new ArrayList<User>();
+
+
         userDb.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
