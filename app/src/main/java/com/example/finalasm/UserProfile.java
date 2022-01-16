@@ -1,5 +1,6 @@
 package com.example.finalasm;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,8 +21,11 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -45,6 +49,7 @@ public class UserProfile extends AppCompatActivity {
     List<User> mainUserList = new ArrayList<>();
     FirebaseDB provider = new FirebaseDB();
     User user;
+    int userKey;
     User currentUser;
     Meal meal;
     Intent intent;
@@ -61,6 +66,9 @@ public class UserProfile extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
 
+//        Intent startIntent = getIntent();
+//        startIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
         name_user = findViewById(R.id.name_user);
         nav_menu = findViewById(R.id.nav_menu);
         nav_search = findViewById(R.id.nav_search);
@@ -68,7 +76,7 @@ public class UserProfile extends AppCompatActivity {
         image_user = findViewById(R.id.image_user);
         post = findViewById(R.id.post_user);
         rcvCategory = findViewById(R.id.recycler_user);
-        categoryAdapter = new CategoryAdapter(MealAdapter.VERTICAL_REMOVE, this);
+        categoryAdapter = new CategoryAdapter(this, MealAdapter.VERTICAL);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rcvCategory.setLayoutManager(linearLayoutManager);
@@ -98,9 +106,8 @@ public class UserProfile extends AppCompatActivity {
             finish();
         });
 
-        rcvCategory.setAdapter(categoryAdapter);
-
         provider.fetchAllUser(userDb, userList -> {
+            userKey = 0;
             for (int i = 0; i < userList.size(); i++) {
                 user = (User) userList.get(i);
                 mainUserList.add(user);
@@ -112,6 +119,7 @@ public class UserProfile extends AppCompatActivity {
                     String nameBreakDown = user.getUserName();
                     String[] nameParts = nameBreakDown.split(" ");
                     name_user.setText(nameParts[0].trim());
+                    userKey ++;
                     break;
                 }
 
@@ -119,6 +127,7 @@ public class UserProfile extends AppCompatActivity {
                 key++;
             }
             provider.fetchAllMeal(mealDb, mealList -> {
+                savedMeal = new ArrayList<>();
                 for (int i = 0; i < mealList.size(); i++) {
                     meal = (Meal) mealList.get(i);
                     mainMealList.add(meal);
@@ -135,7 +144,16 @@ public class UserProfile extends AppCompatActivity {
                         }
                     }
                 }
+//                List<Category> listCategory = new ArrayList<>();
+//                listCategory.add(new Category("Saved Collection", savedMeal));
+//                categoryAdapter = new CollectionAdapter(this, savedMeal, new CollectionAdapter.IClickListener() {
+//                    @Override
+//                    public void onClickDeleteItem(Meal meal, int position) {
+//                        currentUser.getCollection().remove(position);
+//                        userDb.child(String.valueOf(userKey)).setValue(currentUser);
+//                    }});
                 categoryAdapter.setData(getListCategory());
+                rcvCategory.setAdapter(categoryAdapter);
             });
         });
 

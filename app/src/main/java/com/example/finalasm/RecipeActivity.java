@@ -15,6 +15,9 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
@@ -55,6 +58,7 @@ public class RecipeActivity extends AppCompatActivity {
     List<Meal> mainMealList = new ArrayList<Meal>();
     List<User> mainUserList = new ArrayList<User>();
     Meal meal;
+    User user, currentUser;
     FirebaseDB firebaseHandler = new FirebaseDB();
     Meal mealObj;
     String nameValue;
@@ -70,7 +74,11 @@ public class RecipeActivity extends AppCompatActivity {
     TextView txtRateCount;
     ListView listIngre;
     List<String> listIngredient;
-
+    FirebaseAuth auth = FirebaseAuth.getInstance();
+    FirebaseUser firebaseUser = auth.getCurrentUser();
+    int mealKey;
+    int userKey;
+    String previousActivity;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -80,6 +88,8 @@ public class RecipeActivity extends AppCompatActivity {
 
         intent = getIntent();
         nameValue = (String) intent.getExtras().get("name");
+        previousActivity = (String) intent.getExtras().get("previousActivity");
+
 
         btnTimer = findViewById(R.id.btn_timer_recipe);
         layoutTimer = findViewById(R.id.layout_timer_recipe);
@@ -94,7 +104,21 @@ public class RecipeActivity extends AppCompatActivity {
         listIngre = findViewById(R.id.list_ingredient_recipe);
         ImageView mealObjImage = findViewById(R.id.image_recipe);
 
-        btnBack.setOnClickListener(view -> finish());
+        btnBack.setOnClickListener(view -> {
+            if (previousActivity.equals("MainActivity")) {
+                Intent i = new Intent(RecipeActivity.this, MainActivity.class);
+                startActivity(i);
+            }
+            else if (previousActivity.equals("UserProfile")) {
+                Intent i = new Intent(RecipeActivity.this, UserProfile.class);
+                startActivity(i);
+            }
+            else if (previousActivity.equals("SearchActivity")) {
+                Intent i = new Intent(RecipeActivity.this, SearchActivity.class);
+                startActivity(i);
+            }
+            finish();
+        });
 
         btnMap.setOnClickListener(v -> {
             intent = new Intent(RecipeActivity.this, MapsActivity.class);
@@ -112,9 +136,36 @@ public class RecipeActivity extends AppCompatActivity {
             for(int i=0; i < mainMealList.size(); i++) {
                 if (nameValue.equals(mainMealList.get(i).getStrMeal())) {
                     mealObj = mainMealList.get(i);
+                    mealKey = i;
+                    break;
                 }
             }
             Log.d("TAG", "Index cua meal la " + mealObj.toString());
+
+            // Get current user
+            firebaseHandler.fetchAllUser(userDb, userList ->{
+                for (int i = 0; i < userList.size(); i++) {
+                    user = (User) userList.get(i);
+                    if (user.getUserEmail().equals(firebaseUser.getEmail())) {
+                        currentUser = user;
+                        userKey = i;
+                        break;
+                    }
+                }
+
+                //Button Save set on CLick
+                btnSave.setOnClickListener(v->{
+                    if (!currentUser.getCollection().contains(String.valueOf(mealKey))) {
+                        currentUser.getCollection().add(String.valueOf(mealKey));
+                        userDb.child(String.valueOf(userKey)).setValue(currentUser);
+                        Toast.makeText(RecipeActivity.this, "Saved to collection", Toast.LENGTH_LONG).show();
+                    } else {
+                        currentUser.getCollection().remove(String.valueOf(mealKey));
+                        userDb.child(String.valueOf(userKey)).setValue(currentUser);
+                        Toast.makeText(RecipeActivity.this, "Removed from collection", Toast.LENGTH_LONG).show();
+                    }
+                });
+            });
 
             // Current meal position
             // Get one meal object
@@ -186,7 +237,6 @@ public class RecipeActivity extends AppCompatActivity {
             System.out.println("//"+listIngredient.get(18)+"//");
             List<String> listTemp = new ArrayList<>();
 
-            // TODO lien lac Billie for info
             for (int i = 0; i < listIngredient.size(); i++){
                 if (listIngredient.get(i).equals("\t ")){
                     continue;
@@ -229,6 +279,9 @@ public class RecipeActivity extends AppCompatActivity {
             currentVote = meal.getVote();
             txtRate.setText(currentRating.toString());
             txtRateCount.setText(currentVote+" "+"vote(s)");
+
+
+
 
             // Set rate on Click for user to click in
             rate.setOnClickListener(v -> {

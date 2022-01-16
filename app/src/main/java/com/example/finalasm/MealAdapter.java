@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,9 +49,18 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
 
     int type;
     String key = "0";
+    String classType;
     List<Meal> filterList;
+    List<Meal> tempList;
 
-    public MealAdapter(Context context, int type) {
+    public List<Meal> getTempList() {
+        return tempList;
+    }
+
+    private List<Meal> categoryList;
+
+    public MealAdapter(Context context, String classType, int type) {
+        this.classType = classType;
         this.context = context;
         this.type = type;
     }
@@ -70,6 +80,14 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
         notifyDataSetChanged();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    public void setFilterCategory(Context context, List<Meal> categoryList) {
+        this.categoryList = categoryList;
+//        this.mealList = mealList;
+        this.context = context;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public DishViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -77,8 +95,8 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
         if (type == HORIZONTAL) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_dish_card_horizontal, parent, false);
         }
-        else if (type == VERTICAL_REMOVE) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_dish_card_remove, parent, false);
+        else if (type == VERTICAL) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_dish_card, parent, false);
         }
         else if (type == CATEGORY) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_category_card, parent, false);
@@ -87,7 +105,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_dish_card_horizontal_add, parent, false);
         }
         assert view != null;
-        return new DishViewHolder(view).linkAdapter(this);
+        return new DishViewHolder(view);
     }
 
     @Override
@@ -98,6 +116,12 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
                 return;
             } else {
                 holder.nameCate.setText(cate);
+                holder.itemView.setOnClickListener(v->{
+                    Intent intent = new Intent(context, CategoryActivity.class);
+                    intent.putExtra("name", cate);
+                    context.startActivity(intent);
+                });
+
             }
         } else {
             meal = mealList.get(position);
@@ -114,6 +138,15 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
             holder.itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(context, RecipeActivity.class);
                 intent.putExtra("name", mealList.get(position).getStrMeal());
+                if (classType.equals("UserProfile")) {
+                    intent.putExtra("previousActivity", "UserProfile");
+                }
+                else if (classType.equals("MainActivity")) {
+                    intent.putExtra("previousActivity", "MainActivity");
+                }
+                else if (classType.equals("SearchActivity")) {
+                    intent.putExtra("previousActivity", "SearchActivity");
+                }
                 context.startActivity(intent);
             });
 
@@ -125,24 +158,10 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
                     if (firebaseUser.getEmail().equals(user.getUserEmail())) {
                         currentUser = user;
                         key = String.valueOf(i);
+                        break;
                     }
                 }
-                if (type == VERTICAL_REMOVE) {
-                    holder.buttonRemove.setOnClickListener(v -> {
-//                        List<Meal> tempList = new ArrayList<>();
-//                        tempList.add(mealList.get(position));
-//                        meal = mealList.get(position);
-//                        mealList.remove(position);
-//                        tempList = mealList;
-
-                        currentUser.getCollection().remove(position);
-                        userDb.child(key).setValue(currentUser);
-                        List<Meal> tempList = delete(mealList, position);
-//                        List<Meal> tempList = new ArrayList<>();
-                        setData(context, tempList, cateList);
-                    });
-
-                } else if (type == HORIZONTAL_ADD) {
+                if (type == HORIZONTAL_ADD) {
                     holder.buttonAddHorizontal.setOnClickListener(v -> {
                         if (currentUser.getCollection().contains(String.valueOf(position))) {
                             Toast.makeText(context, "This meal is already in your collection", Toast.LENGTH_LONG).show();
@@ -152,9 +171,8 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
                             }
                             meal = mealList.get(position);
                             currentUser.getCollection().add(String.valueOf(position));
-                            Log.d("SUCCESS", "Added " + meal.getStrMeal() + " to your collection");
-                            userDb.child(key).setValue(currentUser).addOnSuccessListener(unused ->
-                                    Log.d("UPDATE: ", "UPDATED USER COLLECTION"));
+                            Log.d("SUCCESS", "Saved " + meal.getStrMeal() + " to your collection");
+                            userDb.child(key).setValue(currentUser);
                         }
 
                     });
@@ -183,31 +201,20 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
         private TextView nameDish;
         private TextView nameCate;
         private ImageButton buttonAddHorizontal;
-        private ImageButton buttonRemove;
-        private MealAdapter adapter;
+
 
         public DishViewHolder(@NonNull View itemView) {
             super(itemView);
             if (type == CATEGORY) {
+                RecyclerView rcvCategory = itemView.findViewById(R.id.recycler_search);
                 nameCate = itemView.findViewById(R.id.name_category_card);
             }
             else {
                 buttonAddHorizontal = itemView.findViewById(R.id.button_dish_card_horizontal);
-                buttonRemove = itemView.findViewById(R.id.button_dish_card_remove);
-//                if (type == VERTICAL_REMOVE) {
-//                    buttonRemove = itemView.findViewById(R.id.button_dish_card_remove);
-//                    buttonRemove.setOnClickListener(v->{
-//                        adapter.mealList.remove(getAdapterPosition());
-//                        adapter.notifyItemRemoved(getAdapterPosition());
-//                    });
-//                }
+
                 imageDish = itemView.findViewById(R.id.menu_food_display);
                 nameDish = itemView.findViewById(R.id.name_dish_card);
             }
-        }
-        public DishViewHolder linkAdapter(MealAdapter adapter){
-            this.adapter = adapter;
-            return this;
         }
     }
     @SuppressLint("NotifyDataSetChanged")
@@ -230,24 +237,10 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.DishViewHolder
         return filterList;
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    public List<Meal> delete(List<Meal> mealList, int position) {
-        filterList = new ArrayList<>();
-        filterList.addAll(mealList);
-        filterList.remove(position);
-        mealList.clear();
-        return filterList;
-    }
 
-    private List<Meal> getMealByCategory(List<Meal> mealList, String category) {
-        List<Meal> pickedMeal = new ArrayList<>();
-        for (Meal meal : mealList) {
-            if (meal.getStrCategory().equals(category)) {
-                pickedMeal.add(meal);
-            }
-        }
-        return pickedMeal;
-    }
+
+
+
 
 //    public void removeAt(int position) {
 //        mealList.remove(position);
